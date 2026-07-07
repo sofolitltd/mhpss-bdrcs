@@ -59,7 +59,13 @@ class TaDateGroupCard extends StatelessWidget {
                 colMode = flexSpace * 11 / 80;
                 colFare = flexSpace * 11 / 80;
                 colRemarks = flexSpace * 20 / 80;
-                colActions = flexSpace - colFrom - colTo - colMode - colFare - colRemarks;
+                colActions =
+                    flexSpace -
+                    colFrom -
+                    colTo -
+                    colMode -
+                    colFare -
+                    colRemarks;
                 return ScrollConfiguration(
                   behavior: MyCustomScrollBehavior(),
                   child: SingleChildScrollView(
@@ -83,31 +89,122 @@ class TaDateGroupCard extends StatelessWidget {
                                     horizontal: 12,
                                     vertical: 12,
                                   ),
-                                  color: AppColors.primary.withValues(alpha: 0.08),
+                                  color: AppColors.primary.withValues(
+                                    alpha: 0.08,
+                                  ),
                                   child: Row(
                                     children: [
                                       SizedBox(
                                         width: 32,
-                                        child: Text('', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textColor)),
+                                        child: Text(
+                                          '',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                          ),
+                                        ),
                                       ),
                                       const SizedBox(width: 8),
-                                      SizedBox(width: colFrom, child: Text('From', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textColor))),
-                                      SizedBox(width: colTo, child: Text('To', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textColor))),
-                                      SizedBox(width: colMode, child: Text('Mode', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textColor))),
-                                      SizedBox(width: colFare, child: Text('Fare', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textColor))),
-                                      SizedBox(width: colRemarks, child: Text('Remarks', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textColor))),
-                                      SizedBox(width: colActions, child: Text('', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: textColor))),
+                                      SizedBox(
+                                        width: colFrom,
+                                        child: Text(
+                                          'From',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: colTo,
+                                        child: Text(
+                                          'To',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: colMode,
+                                        child: Text(
+                                          'Mode',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: colFare,
+                                        child: Text(
+                                          'Fare',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: colRemarks,
+                                        child: Text(
+                                          'Remarks',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: colActions,
+                                        child: Text(
+                                          '',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                                for (int lIdx = 0; lIdx < group.legs.length; lIdx++)
-                                  _buildLegRow(context, group.legs[lIdx], lIdx, textColor, borderColor,
-                                    colFrom: colFrom, colTo: colTo, colMode: colMode, colFare: colFare, colRemarks: colRemarks, colActions: colActions),
+                                for (
+                                  int lIdx = 0;
+                                  lIdx < group.legs.length;
+                                  lIdx++
+                                )
+                                  _buildLegRow(
+                                    context,
+                                    group.legs[lIdx],
+                                    lIdx,
+                                    textColor,
+                                    borderColor,
+                                    colFrom: colFrom,
+                                    colTo: colTo,
+                                    colMode: colMode,
+                                    colFare: colFare,
+                                    colRemarks: colRemarks,
+                                    colActions: colActions,
+                                  ),
                                 Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 10,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: AppColors.primary.withValues(alpha: 0.1),
-                                    border: Border(bottom: BorderSide(color: borderColor)),
+                                    color: AppColors.primary.withValues(
+                                      alpha: 0.1,
+                                    ),
+                                    border: Border(
+                                      bottom: BorderSide(color: borderColor),
+                                    ),
                                   ),
                                   child: Row(
                                     children: [
@@ -116,8 +213,29 @@ class TaDateGroupCard extends StatelessWidget {
                                       SizedBox(width: colFrom),
                                       SizedBox(width: colTo),
                                       SizedBox(width: colMode),
-                                      SizedBox(width: colFare, child: Text('${group.subTotal}', style: TextStyle(fontWeight: FontWeight.bold, color: textColor, fontSize: 13))),
-                                      SizedBox(width: colRemarks, child: Text('Subtotal', textAlign: TextAlign.end, style: TextStyle(fontWeight: FontWeight.bold, color: textColor, fontSize: 12))),
+                                      SizedBox(
+                                        width: colFare,
+                                        child: Text(
+                                          '${group.subTotal}',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: colRemarks,
+                                        child: Text(
+                                          'Subtotal',
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: textColor,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ),
                                       SizedBox(width: colActions),
                                     ],
                                   ),
@@ -138,7 +256,10 @@ class TaDateGroupCard extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Click "Add Trip" to add a TA entry for this date',
-                  style: TextStyle(color: textColor.withValues(alpha: 0.5), fontSize: 13),
+                  style: TextStyle(
+                    color: textColor.withValues(alpha: 0.5),
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ),
@@ -204,11 +325,29 @@ class TaDateGroupCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          SizedBox(width: colFrom, child: Text(leg.from, style: const TextStyle(fontSize: 13))),
-          SizedBox(width: colTo, child: Text(leg.to, style: const TextStyle(fontSize: 13))),
-          SizedBox(width: colMode, child: Text(leg.mode, style: const TextStyle(fontSize: 13))),
-          SizedBox(width: colFare, child: Text(leg.fare == 0 ? '' : leg.fare.toString(), style: const TextStyle(fontSize: 13))),
-          SizedBox(width: colRemarks, child: Text(leg.remarks, style: const TextStyle(fontSize: 13))),
+          SizedBox(
+            width: colFrom,
+            child: Text(leg.from, style: const TextStyle(fontSize: 13)),
+          ),
+          SizedBox(
+            width: colTo,
+            child: Text(leg.to, style: const TextStyle(fontSize: 13)),
+          ),
+          SizedBox(
+            width: colMode,
+            child: Text(leg.mode, style: const TextStyle(fontSize: 13)),
+          ),
+          SizedBox(
+            width: colFare,
+            child: Text(
+              leg.fare == 0 ? '' : leg.fare.toString(),
+              style: const TextStyle(fontSize: 13),
+            ),
+          ),
+          SizedBox(
+            width: colRemarks,
+            child: Text(leg.remarks, style: const TextStyle(fontSize: 13)),
+          ),
           SizedBox(
             width: colActions,
             child: Row(
@@ -224,7 +363,8 @@ class TaDateGroupCard extends StatelessWidget {
                 const SizedBox(width: 6),
                 IconButton(
                   icon: const Icon(Icons.edit_outlined, size: 16),
-                  onPressed: () => _showLegDialog(context, leg: leg, index: index),
+                  onPressed: () =>
+                      _showLegDialog(context, leg: leg, index: index),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                 ),
@@ -255,7 +395,9 @@ class TaDateGroupCard extends StatelessWidget {
     final fromCtrl = TextEditingController(text: leg?.from ?? '');
     final toCtrl = TextEditingController(text: leg?.to ?? '');
     final modeCtrl = TextEditingController(text: leg?.mode ?? '');
-    final fareCtrl = TextEditingController(text: leg?.fare == 0 ? '' : leg?.fare.toString() ?? '');
+    final fareCtrl = TextEditingController(
+      text: leg?.fare == 0 ? '' : leg?.fare.toString() ?? '',
+    );
     final remarksCtrl = TextEditingController(text: leg?.remarks ?? '');
 
     final result = await showDialog<bool>(
@@ -279,12 +421,20 @@ class TaDateGroupCard extends StatelessWidget {
             children: [
               TextField(
                 controller: fromCtrl,
-                decoration: const InputDecoration(labelText: 'From', isDense: true, border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                  labelText: 'From',
+                  isDense: true,
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 8),
               TextField(
                 controller: toCtrl,
-                decoration: const InputDecoration(labelText: 'To', isDense: true, border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                  labelText: 'To',
+                  isDense: true,
+                  border: OutlineInputBorder(),
+                ),
               ),
               const SizedBox(height: 8),
               Row(
@@ -293,27 +443,58 @@ class TaDateGroupCard extends StatelessWidget {
                     child: Autocomplete<String>(
                       optionsBuilder: (textEditingValue) {
                         if (textEditingValue.text.isEmpty) return [];
-                        return ['Bus','Train','Rickshaw','Auto','CNG','Launch','Bike','Walk','Van','Taxi','Uber','Plane','Boat','Other']
-                            .where((option) => option.toLowerCase().contains(textEditingValue.text.toLowerCase()));
-                      },
-                      fieldViewBuilder: (context, controller, focusNode, onSubmitted) {
-                        controller.text = leg?.mode ?? '';
-                        controller.addListener(() { modeCtrl.text = controller.text; });
-                        return TextField(
-                          controller: controller,
-                          focusNode: focusNode,
-                          decoration: const InputDecoration(labelText: 'Mode', isDense: true, border: OutlineInputBorder()),
-                          onSubmitted: (_) => onSubmitted(),
+                        return [
+                          'Bus',
+                          'Train',
+                          'Rickshaw',
+                          'Auto',
+                          'CNG',
+                          'Launch',
+                          'Bike',
+                          'Walk',
+                          'Van',
+                          'Taxi',
+                          'Uber',
+                          'Plane',
+                          'Boat',
+                          'Other',
+                        ].where(
+                          (option) => option.toLowerCase().contains(
+                            textEditingValue.text.toLowerCase(),
+                          ),
                         );
                       },
-                      onSelected: (value) { modeCtrl.text = value; },
+                      fieldViewBuilder:
+                          (context, controller, focusNode, onSubmitted) {
+                            controller.text = leg?.mode ?? '';
+                            controller.addListener(() {
+                              modeCtrl.text = controller.text;
+                            });
+                            return TextField(
+                              controller: controller,
+                              focusNode: focusNode,
+                              decoration: const InputDecoration(
+                                labelText: 'Mode',
+                                isDense: true,
+                                border: OutlineInputBorder(),
+                              ),
+                              onSubmitted: (_) => onSubmitted(),
+                            );
+                          },
+                      onSelected: (value) {
+                        modeCtrl.text = value;
+                      },
                     ),
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: TextField(
                       controller: fareCtrl,
-                      decoration: const InputDecoration(labelText: 'Fare', isDense: true, border: OutlineInputBorder()),
+                      decoration: const InputDecoration(
+                        labelText: 'Fare',
+                        isDense: true,
+                        border: OutlineInputBorder(),
+                      ),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     ),
@@ -323,7 +504,11 @@ class TaDateGroupCard extends StatelessWidget {
               const SizedBox(height: 8),
               TextField(
                 controller: remarksCtrl,
-                decoration: const InputDecoration(labelText: 'Remarks', isDense: true, border: OutlineInputBorder()),
+                decoration: const InputDecoration(
+                  labelText: 'Remarks',
+                  isDense: true,
+                  border: OutlineInputBorder(),
+                ),
               ),
             ],
           ),
@@ -342,7 +527,13 @@ class TaDateGroupCard extends StatelessWidget {
     );
 
     if (result == true) {
-      final data = TaLegData(fromCtrl.text, toCtrl.text, modeCtrl.text, int.tryParse(fareCtrl.text) ?? 0, remarksCtrl.text);
+      final data = TaLegData(
+        fromCtrl.text,
+        toCtrl.text,
+        modeCtrl.text,
+        int.tryParse(fareCtrl.text) ?? 0,
+        remarksCtrl.text,
+      );
       if (isEdit && index != null) {
         group.legs[index] = data;
       } else {

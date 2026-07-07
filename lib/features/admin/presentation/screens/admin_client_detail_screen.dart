@@ -143,7 +143,7 @@ class _AboutTab extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _Row(label: 'Case ID', value: client.caseId, textPrimary: textPrimary, textSecondary: textSecondary, fontFamily: fontFamily),
-                _Row(label: 'Name', value: client.name.isNotEmpty ? client.name : 'N/A', textPrimary: textPrimary, textSecondary: textSecondary, fontFamily: fontFamily),
+                _Row(label: 'Name', value: client.name.isNotEmpty ? client.capitalizedName : 'N/A', textPrimary: textPrimary, textSecondary: textSecondary, fontFamily: fontFamily),
                 if (client.address.isNotEmpty)
                   _Row(label: 'Address', value: client.address, textPrimary: textPrimary, textSecondary: textSecondary, fontFamily: fontFamily),
                 if (client.district.isNotEmpty)

@@ -4,6 +4,11 @@ import 'package:go_router/go_router.dart';
 
 import '/core/design_system/app_design_system.dart';
 import '/features/auth/presentation/providers/auth_providers.dart';
+import 'register_screen/custom_text_field.dart';
+import 'register_screen/info_banner.dart';
+import 'register_screen/organization_search_field.dart';
+import 'register_screen/register_header.dart';
+import 'register_screen/sign_in_link.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -52,7 +57,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final authState = ref.watch(authProvider);
-    final organizationsAsync = ref.watch(organizationsProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
     ref.listen(authProvider, (previous, next) {
@@ -65,7 +69,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             content: Text(next.error!),
             backgroundColor: AppColors.accent,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadius.roundedMd,
+            ),
           ),
         );
       }
@@ -81,41 +87,21 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: IconButton(
-                    icon: Icon(Icons.arrow_back_rounded, color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary),
-                    onPressed: () => context.go('/login'),
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.md),
-                Text(
-                  'Create Account',
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  'Join our professional mental health network',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-                  ),
-                ),
+                RegisterHeader(isDark: isDark),
                 const SizedBox(height: AppSpacing.xxl),
                 Container(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
                     color: isDark ? AppColors.surfaceDark : AppColors.surface,
                     borderRadius: AppRadius.roundedLg,
-                    border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-                    boxShadow: [
+                    border: Border.all(
+                      color: isDark ? AppColors.borderDark : AppColors.border,
+                    ),
+                    boxShadow: const [
                       BoxShadow(
                         color: AppColors.cardShadow,
                         blurRadius: 20,
-                        offset: const Offset(0, 10),
+                        offset: Offset(0, 10),
                       ),
                     ],
                   ),
@@ -129,110 +115,29 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: rfs(context, 14),
-                            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                            color: isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimary,
                           ),
                         ),
                         const SizedBox(height: AppSpacing.sm),
-                        organizationsAsync.when(
-                          data: (orgs) => SearchAnchor(
-                            builder: (context, controller) {
-                              return TextFormField(
-                                controller: _orgNameController,
-                                readOnly: true,
-                                decoration: InputDecoration(
-                                  hintText: 'Select organization',
-                                  prefixIcon: Icon(
-                                    Icons.business_outlined,
-                                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-                                    size: 20,
-                                  ),
-                                  suffixIcon: Icon(
-                                    Icons.arrow_drop_down,
-                                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-                                  ),
-                                  filled: true,
-                                  fillColor: isDark ? AppColors.backgroundDark : AppColors.background,
-                                  border: OutlineInputBorder(
-                                    borderRadius: AppRadius.roundedMd,
-                                    borderSide: BorderSide.none,
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: AppRadius.roundedMd,
-                                    borderSide: BorderSide(
-                                      color: isDark ? AppColors.borderDark : AppColors.border,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: AppRadius.roundedMd,
-                                    borderSide: const BorderSide(
-                                      color: AppColors.primary,
-                                      width: 2,
-                                    ),
-                                  ),
-                                  contentPadding: const EdgeInsets.all(
-                                    AppSpacing.md,
-                                  ),
-                                ),
-                                onTap: () => controller.openView(),
-                                validator: (v) {
-                                  if (v?.isEmpty ?? true)
-                                    return 'Please select an organization';
-                                  if (_selectedOrgId == null)
-                                    return 'Invalid selection';
-                                  return null;
-                                },
-                              );
-                            },
-                            suggestionsBuilder: (context, controller) {
-                              final keyword = controller.text.toLowerCase();
-                              final filteredOrgs = orgs
-                                  .where(
-                                    (org) => org.name.toLowerCase().contains(
-                                      keyword,
-                                    ),
-                                  )
-                                  .toList();
-
-                              if (filteredOrgs.isEmpty) {
-                                return [
-                                  ListTile(
-                                    title: Text(
-                                      'No organization found',
-                                      style: TextStyle(
-                                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-                                      ),
-                                    ),
-                                  ),
-                                ];
+                        OrganizationSearchField(
+                          isDark: isDark,
+                          orgNameController: _orgNameController,
+                          employeeIdController: _employeeIdController,
+                          selectedOrgId: _selectedOrgId,
+                          onOrganizationSelected: (name, id, code) {
+                            setState(() {
+                              _orgNameController.text = name;
+                              _selectedOrgId = id;
+                              if (code != null) {
+                                _employeeIdController.text = code;
                               }
-
-                              return filteredOrgs.map(
-                                (org) => ListTile(
-                                  title: Text(org.name),
-                                  onTap: () {
-                                    setState(() {
-                                      _orgNameController.text = org.name;
-                                      _selectedOrgId = org.id; // Store the ID
-                                      if (org.code != null) {
-                                        _employeeIdController.text = org.code!;
-                                      }
-                                    });
-                                    controller.closeView(org.name);
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                          loading: () => const LinearProgressIndicator(),
-                          error: (err, _) => Text(
-                            'Error loading organizations',
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.error,
-                            ),
-                          ),
+                            });
+                          },
                         ),
                         const SizedBox(height: AppSpacing.lg),
-                        _CustomTextField(
+                        CustomTextField(
                           isDark: isDark,
                           controller: _employeeIdController,
                           focusNode: _employeeIdFocusNode,
@@ -242,10 +147,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           prefixIcon: Icons.badge_outlined,
                           validator: (v) =>
                               v?.isEmpty ?? true ? 'Enter employee ID' : null,
-                          onFieldSubmitted: () => _designationFocusNode.requestFocus(),
+                          onFieldSubmitted: () =>
+                              _designationFocusNode.requestFocus(),
                         ),
                         const SizedBox(height: AppSpacing.lg),
-                        _CustomTextField(
+                        CustomTextField(
                           isDark: isDark,
                           controller: _designationController,
                           focusNode: _designationFocusNode,
@@ -258,7 +164,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           onFieldSubmitted: () => _nameFocusNode.requestFocus(),
                         ),
                         const SizedBox(height: AppSpacing.lg),
-                        _CustomTextField(
+                        CustomTextField(
                           isDark: isDark,
                           controller: _nameController,
                           focusNode: _nameFocusNode,
@@ -268,10 +174,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           prefixIcon: Icons.person_outline,
                           validator: (v) =>
                               v?.isEmpty ?? true ? 'Enter your name' : null,
-                          onFieldSubmitted: () => _phoneFocusNode.requestFocus(),
+                          onFieldSubmitted: () =>
+                              _phoneFocusNode.requestFocus(),
                         ),
                         const SizedBox(height: AppSpacing.lg),
-                        _CustomTextField(
+                        CustomTextField(
                           isDark: isDark,
                           controller: _phoneController,
                           focusNode: _phoneFocusNode,
@@ -282,34 +189,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           keyboardType: TextInputType.phone,
                           validator: (v) =>
                               v?.isEmpty ?? true ? 'Enter phone number' : null,
-                          onFieldSubmitted: () => _emailFocusNode.requestFocus(),
+                          onFieldSubmitted: () =>
+                              _emailFocusNode.requestFocus(),
                         ),
                         const SizedBox(height: AppSpacing.lg),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.08),
-                            borderRadius: AppRadius.roundedSm,
-                          ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.info_outline_rounded, size: 16, color: AppColors.primary),
-                              const SizedBox(width: AppSpacing.sm),
-                              Flexible(
-                                child: Text(
-                                  'Use this email and password to log in later.',
-                                  style: TextStyle(
-                                    fontSize: rfs(context, 13),
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.primary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        const InfoBanner(),
                         const SizedBox(height: AppSpacing.lg),
-                        _CustomTextField(
+                        CustomTextField(
                           isDark: isDark,
                           controller: _emailController,
                           focusNode: _emailFocusNode,
@@ -327,10 +213,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                             }
                             return null;
                           },
-                          onFieldSubmitted: () => _passwordFocusNode.requestFocus(),
+                          onFieldSubmitted: () =>
+                              _passwordFocusNode.requestFocus(),
                         ),
                         const SizedBox(height: AppSpacing.lg),
-                        _CustomTextField(
+                        CustomTextField(
                           isDark: isDark,
                           controller: _passwordController,
                           focusNode: _passwordFocusNode,
@@ -344,7 +231,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                               _obscurePassword
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility_outlined,
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                              color: isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondary,
                             ),
                             onPressed: () => setState(
                               () => _obscurePassword = !_obscurePassword,
@@ -352,8 +241,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                           ),
                           validator: (v) {
                             if (v?.isEmpty ?? true) return 'Enter password';
-                            if (v!.length < 6)
+                            if (v!.length < 6) {
                               return 'Password must be at least 6 characters';
+                            }
                             return null;
                           },
                         ),
@@ -394,118 +284,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                 ),
                 const SizedBox(height: AppSpacing.xl),
-                 TextButton(
-                   onPressed: () => context.go('/login'),
-                   child: RichText(
-                     text: TextSpan(
-                       text: "Already have an account? ",
-                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                         color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-                       ),
-                       children: [
-                         TextSpan(
-                           text: 'Sign In',
-                           style: TextStyle(
-                             color: AppColors.primary,
-                             fontWeight: FontWeight.bold,
-                           ),
-                         ),
-                       ],
-                     ),
-                   ),
-                 ),
+                SignInLink(isDark: isDark),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class _CustomTextField extends StatelessWidget {
-  final bool isDark;
-  final TextEditingController controller;
-  final FocusNode? focusNode;
-  final TextInputAction? textInputAction;
-  final String label;
-  final String hint;
-  final IconData prefixIcon;
-  final Widget? suffixIcon;
-  final bool obscureText;
-  final TextInputType? keyboardType;
-  final String? Function(String?)? validator;
-  final VoidCallback? onFieldSubmitted;
-
-  const _CustomTextField({
-    required this.isDark,
-    required this.controller,
-    this.focusNode,
-    this.textInputAction,
-    required this.label,
-    required this.hint,
-    required this.prefixIcon,
-    this.suffixIcon,
-    this.obscureText = false,
-    this.keyboardType,
-    this.validator,
-    this.onFieldSubmitted,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: rfs(context, 14),
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-          ),
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        TextFormField(
-          controller: controller,
-          focusNode: focusNode,
-          textInputAction: textInputAction,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          validator: validator,
-          onFieldSubmitted: (_) => onFieldSubmitted?.call(),
-          style: TextStyle(
-            color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-          ),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-            ),
-            prefixIcon: Icon(
-              prefixIcon,
-              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-              size: 20,
-            ),
-            suffixIcon: suffixIcon,
-            filled: true,
-            fillColor: isDark ? AppColors.backgroundDark : AppColors.background,
-            border: OutlineInputBorder(
-              borderRadius: AppRadius.roundedMd,
-              borderSide: BorderSide.none,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: AppRadius.roundedMd,
-              borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: AppRadius.roundedMd,
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
-            ),
-            contentPadding: const EdgeInsets.all(AppSpacing.md),
-          ),
-        ),
-      ],
     );
   }
 }

@@ -5,18 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/design_system/app_design_system.dart';
-import '../../clients/domain/session.dart';
 import '../domain/assessment_session.dart';
-import '../domain/scoring_engine.dart';
 
-String getTestDisplayName(String testId) {
-  const names = {
-    'dass21_bn': 'DASS-21 (Bangla)',
-    'srq20_bn': 'SRQ-20 (Bangla)',
-    'cspt_bn': 'C-SSRS (Bangla)',
-  };
-  return names[testId] ?? testId;
-}
+import 'assessment_results_screen/assessment_scale_card.dart';
+
+export 'assessment_results_screen/test_display_name.dart';
+export 'assessment_results_screen/session_picker_dialog.dart';
 
 class AssessmentResultsScreen extends ConsumerStatefulWidget {
   final AssessmentSession session;
@@ -45,36 +39,6 @@ class _AssessmentResultsScreenState
     _session = widget.session;
   }
 
-  Color _severityColor(String severity) {
-    switch (severity.toLowerCase()) {
-      case 'normal':
-      case 'no risk indicated':
-        return Colors.green;
-      case 'mild':
-      case 'low risk':
-        return Colors.amber;
-      case 'moderate':
-      case 'probable mental distress':
-      case 'moderate risk':
-        return Colors.orange;
-      case 'severe':
-        return Colors.red;
-      case 'extremely severe':
-      case 'high risk':
-        return const Color(0xFFB71C1C);
-      default:
-        return AppColors.textSecondary;
-    }
-  }
-
-  Color _severityColorFromThreshold(
-      SeverityThreshold t, String currentSeverity) {
-    if (t.label == currentSeverity) {
-      return _severityColor(t.label);
-    }
-    return _severityColor(t.label).withValues(alpha: 0.35);
-  }
-
   @override
   Widget build(BuildContext context) {
     final scores = _session.scores.values.toList();
@@ -97,7 +61,9 @@ class _AssessmentResultsScreenState
                     IconButton(
                       icon: Icon(
                         Icons.arrow_back_rounded,
-                        color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                        color: isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimary,
                       ),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
@@ -108,7 +74,9 @@ class _AssessmentResultsScreenState
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                          color: isDark
+                              ? AppColors.textPrimaryDark
+                              : AppColors.textPrimary,
                           fontFamily: fontFamily,
                         ),
                       ),
@@ -117,7 +85,10 @@ class _AssessmentResultsScreenState
                   ],
                 ),
               ),
-              Divider(height: 1, color: isDark ? AppColors.borderDark : AppColors.border),
+              Divider(
+                height: 1,
+                color: isDark ? AppColors.borderDark : AppColors.border,
+              ),
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.all(AppSpacing.md),
@@ -126,10 +97,16 @@ class _AssessmentResultsScreenState
                       width: double.infinity,
                       padding: const EdgeInsets.all(AppSpacing.md),
                       decoration: BoxDecoration(
-                        color: isDark ? AppColors.surfaceDark : AppColors.surface,
+                        color: isDark
+                            ? AppColors.surfaceDark
+                            : AppColors.surface,
                         borderRadius: AppRadius.roundedMd,
-                        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-                        boxShadow: [
+                        border: Border.all(
+                          color: isDark
+                              ? AppColors.borderDark
+                              : AppColors.border,
+                        ),
+                        boxShadow: const [
                           BoxShadow(
                             color: AppColors.cardShadow,
                             blurRadius: 10,
@@ -142,7 +119,9 @@ class _AssessmentResultsScreenState
                           Text(
                             'Completed ${DateFormat.yMMMd().format(_session.createdAt)}',
                             style: TextStyle(
-                              color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                              color: isDark
+                                  ? AppColors.textSecondaryDark
+                                  : AppColors.textSecondary,
                               fontSize: 14,
                             ),
                           ),
@@ -152,7 +131,9 @@ class _AssessmentResultsScreenState
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                              color: isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimary,
                               fontFamily: fontFamily,
                             ),
                           ),
@@ -161,10 +142,9 @@ class _AssessmentResultsScreenState
                     ),
                     const SizedBox(height: AppSpacing.lg),
                     ...scores.map(
-                      (result) => _buildScaleCard(
-                        result,
-                        _session.testId,
-                        isDark,
+                      (result) => AssessmentScaleCard(
+                        result: result,
+                        testId: _session.testId,
                       ),
                     ),
                   ],
@@ -179,7 +159,7 @@ class _AssessmentResultsScreenState
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
                       minimumSize: const Size(double.infinity, 52),
-                      shape: RoundedRectangleBorder(
+                      shape: const RoundedRectangleBorder(
                         borderRadius: AppRadius.roundedMd,
                       ),
                     ),
@@ -202,370 +182,5 @@ class _AssessmentResultsScreenState
         ),
       ),
     );
-  }
-
-  Widget _buildScaleCard(ScoreResult result, String testId, bool isDark) {
-    final color = _severityColor(result.severity);
-    final thresholds = getSeverityThresholds(testId, result.scale);
-    final maxScore = result.maxScore > 0 ? result.maxScore : 1;
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: AppSpacing.lg),
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.surfaceDark : AppColors.surface,
-        borderRadius: AppRadius.roundedMd,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.cardShadow,
-            blurRadius: 10,
-            offset: Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                result.scale.replaceAll('_', ' ').toUpperCase(),
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-                  letterSpacing: 1,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.15),
-                  borderRadius: AppRadius.roundedSm,
-                ),
-                child: Text(
-                  result.severity,
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: color,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '${result.rawScore}',
-                style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-                  height: 1,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 9, left: 4),
-                child: Text(
-                  '/ $maxScore',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          ClipRRect(
-            borderRadius: AppRadius.roundedSm,
-            child: SizedBox(
-              height: 8,
-              child: Row(
-                children: [
-                  for (final t in thresholds)
-                    Expanded(
-                      flex: t.max - t.min + 1,
-                      child: Container(
-                        color: _severityColorFromThreshold(t, result.severity),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.md),
-          ...thresholds.map((t) {
-            final isCurrent = t.label == result.severity;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 4),
-              child: Row(
-                children: [
-                  Container(
-                    width: 10,
-                    height: 10,
-                    margin: const EdgeInsets.only(right: 8),
-                    decoration: BoxDecoration(
-                      color: isCurrent
-                          ? _severityColor(t.label)
-                          : _severityColor(t.label).withValues(alpha: 0.25),
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      t.label,
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: isCurrent
-                            ? (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary)
-                            : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondary),
-                        fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    '${t.min}${t.min != t.max ? ' - ${t.max}' : ''}',
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: isCurrent
-                          ? (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary)
-                          : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondary),
-                      fontWeight: isCurrent ? FontWeight.bold : FontWeight.normal,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }),
-          if (result.interpretation != null) ...[
-            const SizedBox(height: AppSpacing.md),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(AppSpacing.md),
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.08),
-                borderRadius: AppRadius.roundedSm,
-              ),
-              child: Text(
-                result.interpretation!,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: color.withValues(alpha: 0.9),
-                  height: 1.4,
-                ).merge(
-                  testId.endsWith('_bn') ? GoogleFonts.tiroBangla() : null,
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class SessionPickerDialog extends StatefulWidget {
-  final List<Session> sessions;
-  final String? currentSessionId;
-  final DateTime currentDate;
-
-  const SessionPickerDialog({
-    required this.sessions,
-    this.currentSessionId,
-    required this.currentDate,
-  });
-
-  @override
-  State<SessionPickerDialog> createState() => SessionPickerDialogState();
-}
-
-class SessionPickerDialogState extends State<SessionPickerDialog> {
-  String? _selected;
-  late DateTime _selectedDate;
-
-  @override
-  void initState() {
-    super.initState();
-    _selected = widget.currentSessionId;
-    _selectedDate = widget.currentDate;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textPrimary = isDark ? AppColors.textPrimaryDark : AppColors.textPrimary;
-    final textSecondary = isDark ? AppColors.textSecondaryDark : AppColors.textSecondary;
-    final border = isDark ? AppColors.borderDark : AppColors.border;
-    final surface = isDark ? AppColors.surfaceDark : AppColors.surface;
-
-    return MaxWidthContainer(
-      maxWidth: 500,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Dialog(
-          backgroundColor: surface,
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedLg),
-          insetPadding: const EdgeInsets.all(12),
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(
-                AppSpacing.lg,
-                AppSpacing.lg,
-                AppSpacing.lg,
-                AppSpacing.md,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.link_rounded, color: AppColors.primary),
-                      const SizedBox(width: AppSpacing.sm),
-                      Expanded(
-                        child: Text(
-                          'Link to Session',
-                          style: TextStyle(
-                            fontSize: Theme.of(context).textTheme.titleMedium?.fontSize,
-                            fontWeight: FontWeight.bold,
-                            color: textPrimary,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  Text(
-                    'Date',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  InkWell(
-                    onTap: _pickDate,
-                    borderRadius: AppRadius.roundedSm,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md,
-                        vertical: 14,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: border),
-                        borderRadius: AppRadius.roundedSm,
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.calendar_today_rounded,
-                            size: 20,
-                            color: AppColors.textSecondary,
-                          ),
-                          const SizedBox(width: 12),
-                          Text(
-                            DateFormat.yMMMd().format(_selectedDate),
-                            style: TextStyle(fontSize: 14, color: textPrimary),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  Text(
-                    'Link to Session:',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: textPrimary,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  ButtonTheme(
-                    alignedDropdown: true,
-                    child: DropdownButtonFormField<String?>(
-                      value: _selected,
-                      isExpanded: true,
-                      dropdownColor: isDark ? AppColors.surfaceDark : Colors.white,
-                      icon: Icon(Icons.arrow_drop_down_rounded, color: textSecondary),
-                      style: TextStyle(color: textPrimary, fontSize: 14),
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-                        border: OutlineInputBorder(
-                          borderRadius: AppRadius.roundedSm,
-                          borderSide: BorderSide(color: border),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: AppRadius.roundedSm,
-                          borderSide: BorderSide(color: border),
-                        ),
-                      ),
-                      items: [
-                        DropdownMenuItem<String?>(
-                          value: null,
-                          child: Text('Unlinked', style: TextStyle(color: textPrimary, fontSize: 14)),
-                        ),
-                        ...widget.sessions.map((s) {
-                          final label = s.title.isNotEmpty
-                              ? s.title
-                              : DateFormat.yMMMd().format(s.date);
-                          return DropdownMenuItem<String?>(
-                            value: s.id,
-                            child: Text(label, style: TextStyle(color: textPrimary, fontSize: 14)),
-                          );
-                        }),
-                      ],
-                      onChanged: (val) => setState(() => _selected = val),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: Text('Cancel', style: TextStyle(color: textPrimary)),
-                      ),
-                      const SizedBox(width: AppSpacing.md),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(120, 48),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: AppRadius.roundedMd,
-                          ),
-                        ),
-                        onPressed: () => Navigator.pop(context, (_selected, _selectedDate)),
-                        child: const Text('Save'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _pickDate() async {
-    final date = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate,
-      firstDate: DateTime(2020),
-      lastDate: DateTime(2100),
-    );
-    if (date != null) setState(() => _selectedDate = date);
   }
 }
