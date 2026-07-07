@@ -122,7 +122,16 @@ class _RecentClientTile extends StatelessWidget {
                 color: AppColors.primaryLight,
                 borderRadius: AppRadius.roundedSm,
               ),
-           
+              child: Text(
+                client.name.isNotEmpty ? client.name[0].toUpperCase() : '?',
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  fontFamily: fontFamily,
+                ),
+              ),
+            
             ),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
@@ -130,7 +139,7 @@ class _RecentClientTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    client.caseId,
+                    client.name.isNotEmpty ? client.capitalizedName : 'No name',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
@@ -139,7 +148,7 @@ class _RecentClientTile extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '${client.gender}${client.ageRange.isNotEmpty ? ', ${client.ageRange} yrs' : ''}',
+                    '${client.caseId}${client.ageRange.isNotEmpty ? '  |  ${client.gender}, ${client.ageRange} yrs' : ''}',
                     style: TextStyle(fontSize: 12, color: textSecondary, fontFamily: fontFamily),
                   ),
                 ],
