@@ -56,7 +56,7 @@ class TodaySchedule extends StatelessWidget {
           color: surface,
           borderRadius: AppRadius.roundedMd,
           border: Border.all(color: border),
-          boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 10, offset: const Offset(0, 4))],
+          boxShadow: const [BoxShadow(color: AppColors.cardShadow, blurRadius: 10, offset: Offset(0, 4))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,7 +199,7 @@ class _SessionTile extends StatelessWidget {
           color: isDark ? AppColors.surfaceDark : AppColors.surface,
           borderRadius: AppRadius.roundedMd,
           border: Border.all(color: border),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: AppColors.cardShadow,
               blurRadius: 10,

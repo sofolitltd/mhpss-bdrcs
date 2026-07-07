@@ -50,7 +50,7 @@ class AdminSettingsScreen extends ConsumerWidget {
                                 backgroundColor: AppColors.primary.withValues(alpha: 0.1),
                                 child: Text(
                                   name[0].toUpperCase(),
-                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: AppColors.primary),
+                                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: AppColors.primary),
                                 ),
                               ),
                               const SizedBox(width: 12),
@@ -87,7 +87,7 @@ class AdminSettingsScreen extends ConsumerWidget {
                           );
                         },
                         loading: () => const SizedBox(height: 60, child: Center(child: CircularProgressIndicator(strokeWidth: 2))),
-                        error: (_, __) => const SizedBox.shrink(),
+                        error: (_, _) => const SizedBox.shrink(),
                       ),
                     ),
                     const SizedBox(height: AppSpacing.md),

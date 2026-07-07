@@ -265,7 +265,7 @@ class _OrgFormDialogState extends ConsumerState<_OrgFormDialog> {
                     const SizedBox(width: AppSpacing.md),
                     ElevatedButton(onPressed: _loading ? null : _submit,
                       style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white,
-                        minimumSize: const Size(120, 48), shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd)),
+                        minimumSize: const Size(120, 48), shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd)),
                       child: _loading
                           ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                           : Text(widget.org != null ? 'Save' : 'Create'),
@@ -380,7 +380,7 @@ class _OrgDetailDialogState extends ConsumerState<_OrgDetailDialog> {
                             onPressed: _loading ? null : _saveOrg,
                             child: _loading
                               ? const SizedBox(height: 16, width: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                              : Text('Save', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                              : const Text('Save', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
                           ),
                       ]),
                     ]),

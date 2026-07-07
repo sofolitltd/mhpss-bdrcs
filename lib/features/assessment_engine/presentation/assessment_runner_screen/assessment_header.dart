@@ -63,7 +63,7 @@ class AssessmentHeader extends StatelessWidget {
               backgroundColor: AppColors.primary,
               foregroundColor: Colors.white,
               minimumSize: const Size(80, 40),
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+              shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
             ),
             child: const Text('Finish'),
           ),

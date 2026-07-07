@@ -162,9 +162,9 @@ class _AdminFormDialogState extends ConsumerState<AdminFormDialog> {
                           isExpanded: true,
                           value: _role,
                           underline: const SizedBox(),
-                          items: [
-                            const DropdownMenuItem(value: 'admin', child: Text('Admin', style: TextStyle(fontSize: 13))),
-                            const DropdownMenuItem(value: 'super_admin', child: Text('Super Admin', style: TextStyle(fontSize: 13))),
+                          items: const [
+                            DropdownMenuItem(value: 'admin', child: Text('Admin', style: TextStyle(fontSize: 13))),
+                            DropdownMenuItem(value: 'super_admin', child: Text('Super Admin', style: TextStyle(fontSize: 13))),
                           ],
                           onChanged: (v) => setState(() => _role = v!),
                         ),
@@ -177,7 +177,7 @@ class _AdminFormDialogState extends ConsumerState<AdminFormDialog> {
                       const SizedBox(width: AppSpacing.md),
                       ElevatedButton(onPressed: _loading ? null : _submit,
                         style: ElevatedButton.styleFrom(backgroundColor: AppColors.primary, foregroundColor: Colors.white,
-                          minimumSize: const Size(120, 48), shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd)),
+                          minimumSize: const Size(120, 48), shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd)),
                         child: _loading
                             ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
                             : Text(isEdit ? 'Save' : 'Create'),

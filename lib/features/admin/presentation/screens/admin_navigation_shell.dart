@@ -337,12 +337,12 @@ class _LogoutButton extends ConsumerWidget {
           context.go('/admin/login');
         },
         borderRadius: AppRadius.roundedSm,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
           child: Row(
             children: [
               Icon(Icons.logout_rounded, size: 18, color: AppColors.accent),
-              const SizedBox(width: 12),
+              SizedBox(width: 12),
               Text(
                 'Admin Logout',
                 style: TextStyle(fontSize: 13, color: AppColors.accent, fontWeight: FontWeight.w500),
@@ -368,9 +368,7 @@ class _OrgNameText extends ConsumerWidget {
     if (orgId.isEmpty) return const SizedBox.shrink();
     final orgsAsync = ref.watch(organizationsProvider);
     final orgs = orgsAsync.asData?.value;
-    final orgName = orgs != null
-        ? orgs.where((o) => o.id == orgId).map((o) => o.name).firstOrNull
-        : null;
+    final orgName = orgs?.where((o) => o.id == orgId).map((o) => o.name).firstOrNull;
     return Text(
       orgName ?? orgId,
       style: TextStyle(fontSize: 11, color: textSecondary),

@@ -38,6 +38,8 @@ dependencies:
   latlong2: ^0.10.1
   http: ^1.6.0
   flutter_dotenv: ^5.2.1
+  flutter_web_plugins:
+    sdk: flutter
   file_picker: ^8.3.6
   crypto: ^3.0.6
   pdf: ^3.11.1

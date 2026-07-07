@@ -77,7 +77,7 @@ class _AdminCounselorsScreenState extends ConsumerState<AdminCounselorsScreen> {
                       prefixIcon: Icon(Icons.search_rounded, color: textSecondary),
                       filled: true,
                       fillColor: surface,
-                      border: OutlineInputBorder(borderRadius: AppRadius.roundedMd, borderSide: BorderSide.none),
+                      border: const OutlineInputBorder(borderRadius: AppRadius.roundedMd, borderSide: BorderSide.none),
                       enabledBorder: OutlineInputBorder(borderRadius: AppRadius.roundedMd, borderSide: BorderSide(color: border)),
                       contentPadding: const EdgeInsets.all(AppSpacing.md),
                     ),
@@ -115,8 +115,8 @@ class _AdminCounselorsScreenState extends ConsumerState<AdminCounselorsScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 4),
                           child: InkWell(
                             onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                              pageBuilder: (_, __, ___) => AdminCounselorDetailScreen(counselor: c, clientCount: clientCount),
-                              transitionsBuilder: (_, __, ___, child) => child,
+                              pageBuilder: (_, _, _) => AdminCounselorDetailScreen(counselor: c, clientCount: clientCount),
+                              transitionsBuilder: (_, _, _, child) => child,
                             )),
                             borderRadius: AppRadius.roundedMd,
                             child: Container(
@@ -125,7 +125,7 @@ class _AdminCounselorsScreenState extends ConsumerState<AdminCounselorsScreen> {
                             child: Row(children: [
                               CircleAvatar(
                                 backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                                child: Text(c.name.isNotEmpty ? c.name[0].toUpperCase() : '?', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                                child: Text(c.name.isNotEmpty ? c.name[0].toUpperCase() : '?', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
@@ -174,23 +174,21 @@ class _AdminCounselorsScreenState extends ConsumerState<AdminCounselorsScreen> {
                                         ],
                                       ),
                                     );
-                                    if (confirmed != true || !mounted) return;
+                                    if (confirmed != true || !context.mounted) return;
                                     try {
                                       await ref.read(authRepositoryProvider).adminDeleteCounselor(c.id);
-                                      if (mounted) {
-                                        ref.invalidate(allCounselorsProvider);
-                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                          content: Text('${c.name} deleted.'),
-                                          backgroundColor: Colors.green, behavior: SnackBarBehavior.floating,
-                                        ));
-                                      }
+                                      if (!context.mounted) return;
+                                      ref.invalidate(allCounselorsProvider);
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text('${c.name} deleted.'),
+                                        backgroundColor: Colors.green, behavior: SnackBarBehavior.floating,
+                                      ));
                                     } catch (e) {
-                                      if (mounted) {
-                                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                          content: Text(e.toString().replaceFirst('Exception: ', '')),
-                                          backgroundColor: AppColors.accent, behavior: SnackBarBehavior.floating,
-                                        ));
-                                      }
+                                      if (!context.mounted) return;
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content: Text(e.toString().replaceFirst('Exception: ', '')),
+                                        backgroundColor: AppColors.accent, behavior: SnackBarBehavior.floating,
+                                      ));
                                     }
                                   },
                                 ),

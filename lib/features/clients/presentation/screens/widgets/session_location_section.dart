@@ -129,7 +129,7 @@ class SessionLocationSection extends StatelessWidget {
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
         border: Border.all(color: border),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 10,
@@ -155,7 +155,7 @@ class SessionLocationSection extends StatelessWidget {
               if (latitude != null && longitude != null) ...[
                 TextButton.icon(
                   onPressed: onRemove,
-                  icon: Icon(Icons.close_rounded, size: 16),
+                  icon: const Icon(Icons.close_rounded, size: 16),
                   label: const Text('Remove', style: TextStyle(fontSize: 12)),
                   style: TextButton.styleFrom(
                     foregroundColor: AppColors.accent,
@@ -167,9 +167,9 @@ class SessionLocationSection extends StatelessWidget {
               TextButton.icon(
                 onPressed: isLoading ? null : onRecord,
                 icon: isLoading
-                    ? SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
-                    : Icon(Icons.my_location_rounded, size: 16),
-                label: Text(isLoading ? 'Locating…' : 'Record', style: TextStyle(fontSize: 12)),
+                    ? const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2))
+                    : const Icon(Icons.my_location_rounded, size: 16),
+                label: Text(isLoading ? 'Locating…' : 'Record', style: const TextStyle(fontSize: 12)),
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.primary,
                   padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -276,7 +276,7 @@ class SessionLocationSection extends StatelessWidget {
                           const SizedBox(height: AppSpacing.sm),
                           TextButton.icon(
                             onPressed: onOpenInMaps,
-                            icon: Icon(Icons.open_in_new_rounded, size: 16),
+                            icon: const Icon(Icons.open_in_new_rounded, size: 16),
                             label: const Text('Open in Google Maps', style: TextStyle(fontSize: 12)),
                           ),
                           if (locationTimestamp != null) ...[
@@ -387,7 +387,7 @@ class SessionLocationSection extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     child: TextButton.icon(
                       onPressed: onOpenInMaps,
-                      icon: Icon(Icons.open_in_new_rounded, size: 16),
+                      icon: const Icon(Icons.open_in_new_rounded, size: 16),
                       label: const Text('Open in Google Maps', style: TextStyle(fontSize: 12)),
                     ),
                   ),
@@ -412,7 +412,7 @@ class SessionLocationSection extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Row(
                 children: [
-                  SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
+                  const SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2)),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     'Acquiring GPS…',

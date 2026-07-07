@@ -71,10 +71,9 @@ class _AdminCounselorDetailScreenState extends ConsumerState<AdminCounselorDetai
                         context: context,
                         builder: (_) => EditCounselorDialog(counselor: widget.counselor),
                       );
-                      if (updated == true && mounted) {
-                        ref.invalidate(allCounselorsProvider);
-                        Navigator.of(context).pop();
-                      }
+                      if (updated != true || !context.mounted) return;
+                      ref.invalidate(allCounselorsProvider);
+                      Navigator.of(context).pop();
                     },
                   ),
                   IconButton(
@@ -91,23 +90,21 @@ class _AdminCounselorDetailScreenState extends ConsumerState<AdminCounselorDetai
                           ],
                         ),
                       );
-                      if (confirmed != true || !mounted) return;
+                      if (confirmed != true || !context.mounted) return;
                       try {
                         await ref.read(authRepositoryProvider).adminDeleteCounselor(widget.counselor.id);
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('${widget.counselor.name} deleted.'),
-                            backgroundColor: Colors.green, behavior: SnackBarBehavior.floating,
-                          ));
-                          Navigator.of(context).pop();
-                        }
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('${widget.counselor.name} deleted.'),
+                          backgroundColor: Colors.green, behavior: SnackBarBehavior.floating,
+                        ));
+                        Navigator.of(context).pop();
                       } catch (e) {
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(e.toString().replaceFirst('Exception:', '')),
-                            backgroundColor: AppColors.accent, behavior: SnackBarBehavior.floating,
-                          ));
-                        }
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(e.toString().replaceFirst('Exception:', '')),
+                          backgroundColor: AppColors.accent, behavior: SnackBarBehavior.floating,
+                        ));
                       }
                     },
                   ),
@@ -187,7 +184,7 @@ class _AboutTab extends StatelessWidget {
               backgroundColor: AppColors.primary.withValues(alpha: 0.1),
               child: Text(
                 counselor.name.isNotEmpty ? counselor.name[0].toUpperCase() : '?',
-                style: TextStyle(fontSize: 32, color: AppColors.primary, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 32, color: AppColors.primary, fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -244,8 +241,8 @@ class _ClientsTab extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: AppSpacing.md),
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => AdminClientDetailScreen(client: c),
-                    transitionsBuilder: (_, __, ___, child) => child,
+                    pageBuilder: (_, _, _) => AdminClientDetailScreen(client: c),
+                    transitionsBuilder: (_, _, _, child) => child,
                   )),
                   borderRadius: AppRadius.roundedMd,
                   child: Container(
@@ -308,8 +305,8 @@ class _SessionsTab extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: AppSpacing.md),
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => AdminSessionDetailScreen(session: s),
-                    transitionsBuilder: (_, __, ___, child) => child,
+                    pageBuilder: (_, _, _) => AdminSessionDetailScreen(session: s),
+                    transitionsBuilder: (_, _, _, child) => child,
                   )),
                   borderRadius: AppRadius.roundedMd,
                   child: Container(

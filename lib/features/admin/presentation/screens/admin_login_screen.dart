@@ -97,11 +97,11 @@ class _AdminLoginScreenState extends ConsumerState<AdminLoginScreen> {
                     color: isDark ? AppColors.surfaceDark : AppColors.surface,
                     borderRadius: AppRadius.roundedLg,
                     border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: AppColors.cardShadow,
                         blurRadius: 20,
-                        offset: const Offset(0, 10),
+                        offset: Offset(0, 10),
                       ),
                     ],
                   ),
@@ -178,7 +178,7 @@ class _AdminLoginScreenState extends ConsumerState<AdminLoginScreen> {
               const SizedBox(height: AppSpacing.xl),
               TextButton(
                 onPressed: () => context.go('/login'),
-                child: Text(
+                child: const Text(
                   'Back to counselor login',
                   style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.w500),
                 ),
@@ -253,7 +253,7 @@ class _AdminTextField extends StatelessWidget {
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: isDark ? AppColors.backgroundDark : AppColors.background,
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: AppRadius.roundedMd,
               borderSide: BorderSide.none,
             ),
@@ -261,9 +261,9 @@ class _AdminTextField extends StatelessWidget {
               borderRadius: AppRadius.roundedMd,
               borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderRadius: AppRadius.roundedMd,
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: BorderSide(color: AppColors.primary, width: 2),
             ),
             contentPadding: const EdgeInsets.all(AppSpacing.md),
           ),

@@ -173,7 +173,7 @@ class _AboutTab extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Row(children: [
                       CircleAvatar(radius: 16, backgroundColor: AppColors.primary.withValues(alpha: 0.1),
-                        child: Text(c.name[0].toUpperCase(), style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 12))),
+                        child: Text(c.name[0].toUpperCase(), style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 12))),
                       const SizedBox(width: 12),
                       Expanded(child: Text(c.name, style: TextStyle(color: textPrimary, fontFamily: fontFamily))),
                     ]),
@@ -217,8 +217,8 @@ class _SessionsTab extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: AppSpacing.md),
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => AdminSessionDetailScreen(session: s),
-                    transitionsBuilder: (_, __, ___, child) => child,
+                    pageBuilder: (_, _, _) => AdminSessionDetailScreen(session: s),
+                    transitionsBuilder: (_, _, _, child) => child,
                   )),
                   borderRadius: AppRadius.roundedMd,
                   child: Container(
@@ -295,8 +295,8 @@ class _AssessmentsTab extends ConsumerWidget {
                 padding: const EdgeInsets.only(bottom: AppSpacing.md),
                 child: InkWell(
                   onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (_, __, ___) => AdminAssessmentDetailScreen(assessment: a),
-                    transitionsBuilder: (_, __, ___, child) => child,
+                    pageBuilder: (_, _, _) => AdminAssessmentDetailScreen(assessment: a),
+                    transitionsBuilder: (_, _, _, child) => child,
                   )),
                   borderRadius: AppRadius.roundedMd,
                   child: Container(

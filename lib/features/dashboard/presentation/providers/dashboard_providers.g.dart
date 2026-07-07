@@ -46,7 +46,7 @@ final class AllSessionsProvider
   }
 }
 
-String _$allSessionsHash() => r'705f491bb7e20672812d4df2e87b99203b7d2414';
+String _$allSessionsHash() => r'e0d9c70266bf775881589b63b9b0eb2a3c169342';
 
 @ProviderFor(allAssessmentSessions)
 final allAssessmentSessionsProvider = AllAssessmentSessionsProvider._();
@@ -88,7 +88,7 @@ final class AllAssessmentSessionsProvider
 }
 
 String _$allAssessmentSessionsHash() =>
-    r'efc39221a2332ff6e20b3f36e45fdae57f5f90b4';
+    r'd5c42147178d44d9bac0bf5bb49a27e88c548b82';
 
 @ProviderFor(dashboardData)
 final dashboardDataProvider = DashboardDataProvider._();
@@ -127,4 +127,4 @@ final class DashboardDataProvider
   }
 }
 
-String _$dashboardDataHash() => r'4296d255b4c8e045ebe81b646381085c9dbcb914';
+String _$dashboardDataHash() => r'f3096f157fbe7b76d69c85594777958291b7636d';

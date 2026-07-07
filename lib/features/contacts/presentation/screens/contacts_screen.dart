@@ -100,7 +100,7 @@ class ContactsScreen extends ConsumerWidget {
                   hasScrollBody: false,
                   child: Center(child: CircularProgressIndicator()),
                 ),
-                error: (_, __) => SliverFillRemaining(
+                error: (_, _) => const SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(child: Text('Error loading counselors.')),
                 ),
@@ -132,7 +132,7 @@ class _CounselorCard extends StatelessWidget {
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 10,
@@ -190,7 +190,7 @@ class _CounselorCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
               child: Row(
                 children: [
-                  Icon(Icons.phone_outlined, color: AppColors.primary, size: 18),
+                  const Icon(Icons.phone_outlined, color: AppColors.primary, size: 18),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     c.phone,
@@ -200,7 +200,7 @@ class _CounselorCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Icon(Icons.call_made_rounded, size: 18, color: AppColors.primary),
+                  const Icon(Icons.call_made_rounded, size: 18, color: AppColors.primary),
                 ],
               ),
             ),
@@ -212,7 +212,7 @@ class _CounselorCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
               child: Row(
                 children: [
-                  Icon(Icons.email_outlined, color: AppColors.primary, size: 18),
+                  const Icon(Icons.email_outlined, color: AppColors.primary, size: 18),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     c.email,
@@ -222,7 +222,7 @@ class _CounselorCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Icon(Icons.open_in_new_rounded, size: 18, color: AppColors.primary),
+                  const Icon(Icons.open_in_new_rounded, size: 18, color: AppColors.primary),
                 ],
               ),
             ),

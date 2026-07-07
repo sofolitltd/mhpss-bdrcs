@@ -66,7 +66,7 @@ final class ClientDocumentsProvider
   }
 }
 
-String _$clientDocumentsHash() => r'97145cb57e3395828a057465336650b811e0ba33';
+String _$clientDocumentsHash() => r'9c0a0b3a000b48c1100b27d95bc219a5ce06d659';
 
 final class ClientDocumentsFamily extends $Family
     with $FunctionalFamilyOverride<Stream<List<ClientDocument>>, String> {

@@ -44,7 +44,7 @@ class _CreateCounselorDialogState extends ConsumerState<CreateCounselorDialog> {
         if (mounted) {
           setState(() => _loading = false);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: const Text('Select an organization filter first before creating a counselor.'),
+            const SnackBar(content: Text('Select an organization filter first before creating a counselor.'),
               backgroundColor: AppColors.accent, behavior: SnackBarBehavior.floating),
           );
         }
@@ -141,7 +141,7 @@ class _CreateCounselorDialogState extends ConsumerState<CreateCounselorDialog> {
                       ),
                       child: Row(
                         children: [
-                          Icon(Icons.business_rounded, size: 18, color: AppColors.primary),
+                          const Icon(Icons.business_rounded, size: 18, color: AppColors.primary),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
@@ -231,7 +231,7 @@ class _CreateCounselorDialogState extends ConsumerState<CreateCounselorDialog> {
                             backgroundColor: AppColors.primary,
                             foregroundColor: Colors.white,
                             minimumSize: const Size(120, 48),
-                            shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+                            shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
                           ),
                           child: _loading
                               ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))

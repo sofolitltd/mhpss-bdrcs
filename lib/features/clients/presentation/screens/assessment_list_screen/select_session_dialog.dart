@@ -234,7 +234,7 @@ class SelectSessionDialogState extends ConsumerState<SelectSessionDialog> {
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           minimumSize: const Size(120, 48),
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: AppRadius.roundedMd,
                           ),
                         ),

@@ -86,11 +86,11 @@ class AppTheme {
         ),
         bodyMedium: GoogleFonts.outfit(color: AppColors.textSecondary),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: const CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.roundedMd,
-          side: const BorderSide(color: AppColors.border),
+          side: BorderSide(color: AppColors.border),
         ),
         color: AppColors.surface,
       ),
@@ -114,7 +114,7 @@ class AppTheme {
             horizontal: AppSpacing.lg,
             vertical: AppSpacing.md,
           ),
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
           textStyle: GoogleFonts.outfit(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -147,11 +147,11 @@ class AppTheme {
         ),
         bodyMedium: GoogleFonts.outfit(color: AppColors.textSecondaryDark),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: const CardThemeData(
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.roundedMd,
-          side: const BorderSide(color: AppColors.borderDark),
+          side: BorderSide(color: AppColors.borderDark),
         ),
         color: AppColors.surfaceDark,
       ),
@@ -175,7 +175,7 @@ class AppTheme {
             horizontal: AppSpacing.lg,
             vertical: AppSpacing.md,
           ),
-          shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+          shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
           textStyle: GoogleFonts.outfit(
             fontWeight: FontWeight.bold,
             fontSize: 16,

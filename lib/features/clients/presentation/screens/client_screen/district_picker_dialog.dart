@@ -117,7 +117,7 @@ class _DistrictPickerDialogState extends State<DistrictPickerDialog> {
           children: [
             Row(
               children: [
-                Icon(Icons.map_rounded, color: AppColors.primary),
+                const Icon(Icons.map_rounded, color: AppColors.primary),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
@@ -153,8 +153,8 @@ class _DistrictPickerDialogState extends State<DistrictPickerDialog> {
               ),
               decoration: InputDecoration(
                 hintText: 'Search district...',
-                hintStyle: TextStyle(color: AppColors.textSecondary),
-                prefixIcon: Icon(
+                hintStyle: const TextStyle(color: AppColors.textSecondary),
+                prefixIcon: const Icon(
                   Icons.search_rounded,
                   color: AppColors.textSecondary,
                 ),
@@ -162,7 +162,7 @@ class _DistrictPickerDialogState extends State<DistrictPickerDialog> {
                 fillColor: isDark
                     ? AppColors.backgroundDark
                     : AppColors.background,
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: AppRadius.roundedMd,
                   borderSide: BorderSide.none,
                 ),
@@ -191,7 +191,7 @@ class _DistrictPickerDialogState extends State<DistrictPickerDialog> {
                           ),
                         ),
                         trailing: widget.currentDistrict == d
-                            ? Icon(
+                            ? const Icon(
                                 Icons.check,
                                 color: AppColors.primary,
                                 size: 20,

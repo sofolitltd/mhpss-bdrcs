@@ -76,7 +76,7 @@ Future<bool> showRemoveCounselorConfirmation(
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                         minimumSize: const Size(120, 48),
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: AppRadius.roundedMd,
                         ),
                       ),

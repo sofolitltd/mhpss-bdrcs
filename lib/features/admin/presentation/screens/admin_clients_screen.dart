@@ -61,7 +61,7 @@ class _AdminClientsScreenState extends ConsumerState<AdminClientsScreen> {
                         hintStyle: TextStyle(color: textSecondary),
                         prefixIcon: Icon(Icons.search_rounded, color: textSecondary),
                         filled: true, fillColor: surface,
-                        border: OutlineInputBorder(borderRadius: AppRadius.roundedMd, borderSide: BorderSide.none),
+                        border: const OutlineInputBorder(borderRadius: AppRadius.roundedMd, borderSide: BorderSide.none),
                         enabledBorder: OutlineInputBorder(borderRadius: AppRadius.roundedMd, borderSide: BorderSide(color: border)),
                         contentPadding: const EdgeInsets.all(AppSpacing.md),
                       ),
@@ -70,7 +70,7 @@ class _AdminClientsScreenState extends ConsumerState<AdminClientsScreen> {
                     counselorsAsync.when(
                       data: (counselors) => DropdownButtonFormField<String?>(
                         isExpanded: true,
-                        value: _counselorFilter,
+                        initialValue: _counselorFilter,
                         decoration: InputDecoration(
                           hintText: 'All Counselors',
                           hintStyle: TextStyle(color: textSecondary, fontSize: 14),
@@ -87,7 +87,7 @@ class _AdminClientsScreenState extends ConsumerState<AdminClientsScreen> {
                         onChanged: (v) => setState(() => _counselorFilter = v),
                       ),
                       loading: () => const SizedBox.shrink(),
-                      error: (_, __) => const SizedBox.shrink(),
+                      error: (_, _) => const SizedBox.shrink(),
                     ),
                   ]),
                 ),
@@ -128,8 +128,8 @@ class _AdminClientsScreenState extends ConsumerState<AdminClientsScreen> {
                           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 4),
                           child: InkWell(
                             onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                              pageBuilder: (_, __, ___) => AdminClientDetailScreen(client: c, counselors: counselors),
-                              transitionsBuilder: (_, __, ___, child) => child,
+                              pageBuilder: (_, _, _) => AdminClientDetailScreen(client: c, counselors: counselors),
+                              transitionsBuilder: (_, _, _, child) => child,
                             )),
                             borderRadius: AppRadius.roundedMd,
                             child: Container(

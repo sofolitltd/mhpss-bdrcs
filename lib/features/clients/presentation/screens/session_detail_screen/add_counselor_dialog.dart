@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '/core/design_system/app_design_system.dart';
-import '../../../contacts/domain/contact.dart';
+import '../../../../contacts/domain/counselor.dart';
 
 class AddCounselorDialog extends StatefulWidget {
-  final List<Contact> available;
+  final List<Counselor> available;
 
   const AddCounselorDialog({super.key, required this.available});
 
@@ -181,7 +181,7 @@ class _AddCounselorDialogState extends State<AddCounselorDialog> {
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           minimumSize: const Size(140, 48),
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: AppRadius.roundedMd,
                           ),
                         ),

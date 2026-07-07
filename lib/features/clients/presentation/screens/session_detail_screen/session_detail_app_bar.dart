@@ -66,7 +66,7 @@ class SessionDetailAppBar extends StatelessWidget implements PreferredSizeWidget
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                   minimumSize: const Size(80, 36),
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: AppRadius.roundedSm,
                   ),
                 ),

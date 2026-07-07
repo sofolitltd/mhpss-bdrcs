@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '/core/design_system/app_design_system.dart';
-import '../../data/client_repository.dart';
-import '../../domain/models/client.dart';
+import '../../../data/client_repository.dart';
+import '../../../domain/models/client.dart';
 import 'edit_client_form.dart';
 
 class EditClientDialog extends ConsumerStatefulWidget {
@@ -160,7 +160,7 @@ class _EditClientDialogState extends ConsumerState<EditClientDialog> {
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           minimumSize: const Size(120, 48),
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: AppRadius.roundedMd,
                           ),
                         ),

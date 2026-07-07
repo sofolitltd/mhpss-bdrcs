@@ -44,7 +44,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             content: Text(next.error!),
             backgroundColor: AppColors.accent,
             behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+            shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
           ),
         );
       }
@@ -65,7 +65,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: .circular(24),
-                    image: DecorationImage(image: AssetImage('assets/logo.png'))
+                    image: const DecorationImage(image: AssetImage('assets/logo.png'))
                   ),
                   height: 80,
                   width: 80,
@@ -76,11 +76,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     color: isDark ? AppColors.surfaceDark : AppColors.surface,
                     borderRadius: AppRadius.roundedLg,
                     border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: AppColors.cardShadow,
                         blurRadius: 20,
-                        offset: const Offset(0, 10),
+                        offset: Offset(0, 10),
                       ),
                     ],
                   ),
@@ -210,10 +210,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         color: AppColors.primary,
                         fontWeight: FontWeight.w500,
                       ),
-                      children: [
+                      children: const [
                         WidgetSpan(
                           child: Padding(
-                            padding: const EdgeInsets.only(left: 4),
+                            padding: EdgeInsets.only(left: 4),
                             child: Icon(Icons.shield_rounded, size: 14, color: AppColors.primary),
                           ),
                         ),
@@ -297,7 +297,7 @@ class _CustomTextField extends StatelessWidget {
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: isDark ? AppColors.backgroundDark : AppColors.background,
-            border: OutlineInputBorder(
+            border: const OutlineInputBorder(
               borderRadius: AppRadius.roundedMd,
               borderSide: BorderSide.none,
             ),
@@ -305,9 +305,9 @@ class _CustomTextField extends StatelessWidget {
               borderRadius: AppRadius.roundedMd,
               borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
             ),
-            focusedBorder: OutlineInputBorder(
+            focusedBorder: const OutlineInputBorder(
               borderRadius: AppRadius.roundedMd,
-              borderSide: const BorderSide(color: AppColors.primary, width: 2),
+              borderSide: BorderSide(color: AppColors.primary, width: 2),
             ),
             contentPadding: const EdgeInsets.all(AppSpacing.md),
           ),

@@ -66,7 +66,7 @@ final class ClientByIdProvider
   }
 }
 
-String _$clientByIdHash() => r'946adc836ae7f7d0dcad101e036da9451ad06f5a';
+String _$clientByIdHash() => r'eca230fd690bf3a9d7713fc27fe9b17d73ec6736';
 
 final class ClientByIdFamily extends $Family
     with $FunctionalFamilyOverride<Client?, String> {
@@ -131,7 +131,7 @@ final class SessionRepositoryProvider
   }
 }
 
-String _$sessionRepositoryHash() => r'8d11fddb1db6b47173eadbae0eb08f07cf86dfbb';
+String _$sessionRepositoryHash() => r'47777180b43e265d035080855df9d19e118617a0';
 
 @ProviderFor(clientSessions)
 final clientSessionsProvider = ClientSessionsFamily._();
@@ -188,7 +188,7 @@ final class ClientSessionsProvider
   }
 }
 
-String _$clientSessionsHash() => r'af5e3c068760d0f9c9a691381fa828bd3d642fe7';
+String _$clientSessionsHash() => r'4156ac6a566f9a02a55f51a7ae53cf59ddfd1762';
 
 final class ClientSessionsFamily extends $Family
     with $FunctionalFamilyOverride<Stream<List<Session>>, String> {

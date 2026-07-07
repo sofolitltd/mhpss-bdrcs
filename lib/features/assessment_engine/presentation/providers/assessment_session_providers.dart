@@ -7,7 +7,7 @@ import '../../data/assessment_session_repository.dart';
 part 'assessment_session_providers.g.dart';
 
 @riverpod
-Future<List<AssessmentSession>> clientAssessmentSessions(ref, String clientId) async {
+Future<List<AssessmentSession>> clientAssessmentSessions(Ref ref, String clientId) async {
   final repository = ref.watch(assessmentSessionRepositoryProvider);
   return repository.getSessionsByClientId(clientId);
 }

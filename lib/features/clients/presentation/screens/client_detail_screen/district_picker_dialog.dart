@@ -171,7 +171,7 @@ class _DistrictPickerDialogState extends State<DistrictPickerDialog> {
                 fillColor: widget.isDark
                     ? AppColors.backgroundDark
                     : AppColors.background,
-                border: OutlineInputBorder(
+                border: const OutlineInputBorder(
                   borderRadius: AppRadius.roundedMd,
                   borderSide: BorderSide.none,
                 ),

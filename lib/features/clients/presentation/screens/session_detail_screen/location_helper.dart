@@ -26,12 +26,12 @@ Future<Position?> getGpsPosition(String sessionId) async {
   var lngSum = 0.0;
   var goodCount = 0;
 
-  final locationSettings = kIsWeb
-      ? const LocationSettings(
+  const locationSettings = kIsWeb
+      ? LocationSettings(
           accuracy: LocationAccuracy.low,
           timeLimit: Duration(seconds: 30),
         )
-      : const LocationSettings(
+      : LocationSettings(
           accuracy: LocationAccuracy.high,
           timeLimit: Duration(seconds: 5),
         );
@@ -62,8 +62,9 @@ Future<Position?> getGpsPosition(String sessionId) async {
         );
       }
     }
-    if (i < maxAttempts - 1)
+    if (i < maxAttempts - 1) {
       await Future.delayed(const Duration(milliseconds: 800));
+    }
   }
 
   if (goodCount >= 1) {

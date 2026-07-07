@@ -6,7 +6,7 @@ import '../../domain/models/client_document.dart';
 part 'document_providers.g.dart';
 
 @riverpod
-Stream<List<ClientDocument>> clientDocuments(ref, String clientId) {
+Stream<List<ClientDocument>> clientDocuments(Ref ref, String clientId) {
   final repository = ref.watch(documentRepositoryProvider);
   return repository.watchDocumentsByClientId(clientId);
 }

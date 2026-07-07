@@ -35,7 +35,7 @@ class RecentClients extends StatelessWidget {
           color: surface,
           borderRadius: AppRadius.roundedMd,
           border: Border.all(color: border),
-          boxShadow: [BoxShadow(color: AppColors.cardShadow, blurRadius: 10, offset: const Offset(0, 4))],
+          boxShadow: const [BoxShadow(color: AppColors.cardShadow, blurRadius: 10, offset: Offset(0, 4))],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +76,7 @@ class RecentClients extends StatelessWidget {
               ),
             ),
             Divider(color: border, height: AppSpacing.md),
-            SizedBox(
+            const SizedBox(
               height: 2,),
             ...clients.map((c) => _RecentClientTile(
               client: c,
@@ -84,7 +84,7 @@ class RecentClients extends StatelessWidget {
               textSecondary: textSecondary,
               fontFamily: fontFamily,
             )),
-            SizedBox(
+            const SizedBox(
               height: AppSpacing.sm,),
           ],
         ),
@@ -118,7 +118,7 @@ class _RecentClientTile extends StatelessWidget {
               width: 40,
               height: 40,
               alignment: Alignment.center,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.primaryLight,
                 borderRadius: AppRadius.roundedSm,
               ),

@@ -63,7 +63,7 @@ class AssessmentsTab extends ConsumerWidget {
           itemCount: sorted.length,
           itemBuilder: (context, index) {
             final assessment = sorted[index];
-            final _isDark = Theme.of(context).brightness == Brightness.dark;
+            final isDark = Theme.of(context).brightness == Brightness.dark;
             return Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.md),
               child: InkWell(
@@ -80,10 +80,10 @@ class AssessmentsTab extends ConsumerWidget {
                 child: Container(
                   padding: const EdgeInsets.all(AppSpacing.md),
                   decoration: BoxDecoration(
-                    color: _isDark ? AppColors.surfaceDark : AppColors.surface,
+                    color: isDark ? AppColors.surfaceDark : AppColors.surface,
                     borderRadius: AppRadius.roundedMd,
-                    border: Border.all(color: _isDark ? AppColors.borderDark : AppColors.border),
-                    boxShadow: [
+                    border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
+                    boxShadow: const [
                       BoxShadow(
                         color: AppColors.cardShadow,
                         blurRadius: 10,
@@ -107,7 +107,7 @@ class AssessmentsTab extends ConsumerWidget {
                                     Text(
                                       DateFormat.yMMMd().format(assessment.createdAt),
                                       style: TextStyle(
-                                        color: _isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
                                         fontSize: 12,
                                       ),
                                     ),
@@ -115,7 +115,7 @@ class AssessmentsTab extends ConsumerWidget {
                                     SessionLink(
                                       linkedSessionId: assessment.linkedSessionId,
                                       sessionMap: sessionMap,
-                                      isDark: _isDark,
+                                      isDark: isDark,
                                     ),
                                   ],
                                 ),
@@ -125,7 +125,7 @@ class AssessmentsTab extends ConsumerWidget {
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 15,
-                                    color: _isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
+                                    color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
                                   ),
                                 ),
                               ],

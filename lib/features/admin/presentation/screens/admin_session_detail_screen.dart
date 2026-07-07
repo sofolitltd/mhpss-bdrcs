@@ -135,7 +135,7 @@ class _NotesBlock extends StatelessWidget {
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
         border: Border.all(color: border),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 10,
@@ -179,7 +179,7 @@ class _AdminAssessmentSection extends ConsumerWidget {
         color: surface,
         borderRadius: AppRadius.roundedMd,
         border: Border.all(color: border),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(color: AppColors.cardShadow, blurRadius: 10, offset: Offset(0, 4)),
         ],
       ),
@@ -199,8 +199,8 @@ class _AdminAssessmentSection extends ConsumerWidget {
                   padding: const EdgeInsets.only(top: AppSpacing.sm),
                   child: InkWell(
                     onTap: () => Navigator.of(context).push(PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => AdminAssessmentDetailScreen(assessment: a),
-                      transitionsBuilder: (_, __, ___, child) => child,
+                      pageBuilder: (_, _, _) => AdminAssessmentDetailScreen(assessment: a),
+                      transitionsBuilder: (_, _, _, child) => child,
                     )),
                     borderRadius: AppRadius.roundedMd,
                     child: Container(
@@ -231,7 +231,7 @@ class _AdminAssessmentSection extends ConsumerWidget {
               );
             },
             loading: () => const Center(child: CircularProgressIndicator()),
-            error: (err, _) => Text('Error: $err', style: TextStyle(color: AppColors.accent)),
+            error: (err, _) => Text('Error: $err', style: const TextStyle(color: AppColors.accent)),
           ),
         ],
       ),

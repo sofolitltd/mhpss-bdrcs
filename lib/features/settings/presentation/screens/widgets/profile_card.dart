@@ -33,7 +33,7 @@ class ProfileCard extends StatelessWidget {
           border: Border.all(
             color: isDark ? AppColors.borderDark : AppColors.border,
           ),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: AppColors.cardShadow,
               blurRadius: 10,

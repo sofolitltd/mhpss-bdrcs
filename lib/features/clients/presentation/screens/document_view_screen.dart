@@ -36,7 +36,7 @@ class DocumentViewScreen extends StatelessWidget {
                     if (progress == null) return child;
                     return const Center(child: CircularProgressIndicator());
                   },
-                  errorBuilder: (_, _, __) => _errorWidget(context, isDark),
+                  errorBuilder: (_, _, _) => _errorWidget(context, isDark),
                 ),
               )
             : _filePreview(context, isDark),

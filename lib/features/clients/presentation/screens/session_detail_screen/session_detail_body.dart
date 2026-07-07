@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '/core/design_system/app_design_system.dart';
 import '../../../../assessment_engine/domain/assessment_session.dart';

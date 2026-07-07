@@ -10,7 +10,7 @@ import '../../../clients/presentation/providers/clients_provider.dart';
 part 'dashboard_providers.g.dart';
 
 @riverpod
-Future<List<Session>> allSessions(ref) async {
+Future<List<Session>> allSessions(Ref ref) async {
   try {
     final repo = ref.read(sessionRepositoryProvider);
     return repo.getAllSessions();
@@ -20,7 +20,7 @@ Future<List<Session>> allSessions(ref) async {
 }
 
 @riverpod
-Future<List<AssessmentSession>> allAssessmentSessions(ref) async {
+Future<List<AssessmentSession>> allAssessmentSessions(Ref ref) async {
   try {
     final repo = ref.read(assessmentSessionRepositoryProvider);
     return repo.getAllSessions();
@@ -30,7 +30,7 @@ Future<List<AssessmentSession>> allAssessmentSessions(ref) async {
 }
 
 @riverpod
-Future<DashboardData> dashboardData(ref) async {
+Future<DashboardData> dashboardData(Ref ref) async {
   try {
     final clientsAsync = ref.watch(clientsProvider);
     final clients = clientsAsync.value ?? [];
@@ -124,7 +124,7 @@ Future<DashboardData> dashboardData(ref) async {
       }).length,
     );
   } catch (_) {
-    return DashboardData(
+    return const DashboardData(
       clientCount: 0,
       sessions: [],
       todaySessions: [],

@@ -32,11 +32,11 @@ class AdminAssessmentDetailScreen extends StatelessWidget {
             actions: [
               TextButton.icon(
                 onPressed: () => Navigator.of(context).push(PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => AssessmentResultsScreen(
+                  pageBuilder: (_, _, _) => AssessmentResultsScreen(
                     session: assessment,
                     testName: getTestDisplayName(assessment.testId),
                   ),
-                  transitionsBuilder: (_, __, ___, child) => child,
+                  transitionsBuilder: (_, _, _, child) => child,
                 )),
                 icon: const Icon(Icons.open_in_new_rounded, size: 16),
                 label: const Text('Full Results'),

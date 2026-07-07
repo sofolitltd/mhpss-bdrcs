@@ -180,12 +180,13 @@ class BillsDataTable extends StatelessWidget {
     return DataCell(
       Center(
         child: () {
-          final mobileRow = row.existingBill?.daRows
-              .where((d) => d.isOptional)
-              .firstOrNull;
-          final hasMobile = mobileRow != null && mobileRow.days > 0;
+          final count = row.existingBill?.taGroups
+                  .where((g) => g.includeMobile)
+                  .length ??
+              0;
+          final mobileTotal = count * 300;
           return Text(
-            hasMobile ? '${mobileRow.total}' : '–',
+            mobileTotal > 0 ? '$mobileTotal' : '–',
             style: TextStyle(color: textPrimary),
           );
         }(),

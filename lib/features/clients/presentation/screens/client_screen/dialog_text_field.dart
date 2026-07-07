@@ -10,7 +10,7 @@ class DialogTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final int? maxLines;
 
-  const DialogTextField({
+  const DialogTextField({super.key, 
     required this.controller,
     required this.label,
     required this.hint,

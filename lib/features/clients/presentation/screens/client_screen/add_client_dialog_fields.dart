@@ -245,7 +245,7 @@ class DialogActionButtons extends StatelessWidget {
             backgroundColor: AppColors.primary,
             foregroundColor: Colors.white,
             minimumSize: const Size(140, 48),
-            shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+            shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
           ),
           child: isLoading
               ? const SizedBox(

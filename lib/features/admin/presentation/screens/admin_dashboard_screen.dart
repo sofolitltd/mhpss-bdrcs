@@ -38,7 +38,7 @@ class AdminDashboardScreen extends ConsumerWidget {
                       LayoutBuilder(
                         builder: (context, constraints) {
                           final columns = constraints.maxWidth >= 600 ? 4 : 2;
-                          final spacing = AppSpacing.sm;
+                          const spacing = AppSpacing.sm;
                           final totalSpacing = spacing * (columns - 1);
                           final childWidth = (constraints.maxWidth - totalSpacing) / columns;
                           return Wrap(

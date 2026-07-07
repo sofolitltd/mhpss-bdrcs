@@ -6,7 +6,7 @@ import '../domain/assessment_session.dart';
 part 'assessment_session_repository.g.dart';
 
 @Riverpod(keepAlive: true)
-AssessmentSessionRepository assessmentSessionRepository(ref) {
+AssessmentSessionRepository assessmentSessionRepository(Ref ref) {
   return AssessmentSessionRepository();
 }
 

@@ -120,8 +120,8 @@ class _BillTabState extends ConsumerState<BillTab> {
               builder: (context, constraints) {
                 final availableWidth = constraints.maxWidth;
                 final tableWidth = availableWidth < 520 ? 520.0 : availableWidth;
-                final colIndex = 32.0;
-                final paddingH = 24.0;
+                const colIndex = 32.0;
+                const paddingH = 24.0;
                 final flexSpace = tableWidth - colIndex - 8 - paddingH - 2;
                 final colDates = flexSpace * 22 / 80;
                 final colTA = flexSpace * 11 / 80;

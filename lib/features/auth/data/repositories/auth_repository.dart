@@ -192,7 +192,7 @@ class AuthRepository {
   Future<void> updateOrganization(String id, String name, String? code) async {
     await _firestore.collection('organizations').doc(id).update({
       'name': name,
-      if (code != null) 'code': code,
+      'code': ?code,
     });
   }
 

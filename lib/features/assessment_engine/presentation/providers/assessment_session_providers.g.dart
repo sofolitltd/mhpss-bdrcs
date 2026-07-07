@@ -68,7 +68,7 @@ final class ClientAssessmentSessionsProvider
 }
 
 String _$clientAssessmentSessionsHash() =>
-    r'1751f4c1eb1c5a5cbb51e8e7060f6345dd9e1db3';
+    r'717d9382a6c000795fb4f4eea11a7304fbee20a9';
 
 final class ClientAssessmentSessionsFamily extends $Family
     with $FunctionalFamilyOverride<FutureOr<List<AssessmentSession>>, String> {

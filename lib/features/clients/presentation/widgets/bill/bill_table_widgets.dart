@@ -226,7 +226,7 @@ class BillListItem extends StatelessWidget {
                         color: AppColors.primary.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.edit_outlined,
                         size: 14,
                         color: AppColors.primary,

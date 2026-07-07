@@ -63,7 +63,7 @@ class ContactTile extends StatelessWidget {
                 ],
               ),
             ),
-            Icon(Icons.call_made_rounded, size: 18, color: Colors.green),
+            const Icon(Icons.call_made_rounded, size: 18, color: Colors.green),
           ],
         ),
       ),

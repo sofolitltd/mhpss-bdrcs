@@ -63,7 +63,7 @@ final class ClientBillsProvider
   }
 }
 
-String _$clientBillsHash() => r'24595f04a16c1ea7d3e7445a3c9d144f763c1625';
+String _$clientBillsHash() => r'3e2696e4014c43fe6e4bf7943f26f6804090dcc9';
 
 final class ClientBillsFamily extends $Family
     with $FunctionalFamilyOverride<Stream<List<Bill>>, String> {

@@ -8,7 +8,7 @@ import 'clients_provider.dart';
 part 'client_detail_providers.g.dart';
 
 @riverpod
-Client? clientById(ref, String clientId) {
+Client? clientById(Ref ref, String clientId) {
   final clientsAsync = ref.watch(clientsProvider);
   final clients = clientsAsync.value;
   if (clients == null) return null;
@@ -20,12 +20,12 @@ Client? clientById(ref, String clientId) {
 }
 
 @riverpod
-SessionRepository sessionRepository(ref) {
+SessionRepository sessionRepository(Ref ref) {
   return SessionRepository();
 }
 
 @riverpod
-Stream<List<Session>> clientSessions(ref, String clientId) {
+Stream<List<Session>> clientSessions(Ref ref, String clientId) {
   final repository = ref.watch(sessionRepositoryProvider);
   return repository.watchSessionsByClientId(clientId);
 }

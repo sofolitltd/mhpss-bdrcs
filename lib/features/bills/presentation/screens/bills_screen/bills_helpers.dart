@@ -48,7 +48,14 @@ Widget buildTotalsRow(
     if (r.existingBill == null) return sum;
     return sum + r.existingBill!.totalTA;
   });
-  final grandTotal = taTotal + daTotal;
+  final mobileTotal = selected.fold(0, (int sum, r) {
+    if (r.existingBill == null) return sum;
+    final count = r.existingBill!.taGroups
+        .where((g) => g.includeMobile)
+        .length;
+    return sum + count * 300;
+  });
+  final grandTotal = taTotal + daTotal + mobileTotal;
 
   return Row(
     children: [
@@ -74,6 +81,17 @@ Widget buildTotalsRow(
         '($pocketMoney + $lunchAllowance)',
         style: TextStyle(fontSize: 11, color: textSecondary),
       ),
+      if (mobileTotal > 0) ...[
+        const SizedBox(width: 16),
+        Text(
+          'Mobile: $mobileTotal',
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: textPrimary,
+          ),
+        ),
+      ],
       const Spacer(),
       Text(
         'Total: $grandTotal',

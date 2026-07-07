@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../core/design_system/app_design_system.dart';
 import '../../domain/scoring_engine.dart';
 
 Color severityColor(String severity) {

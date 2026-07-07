@@ -6,7 +6,7 @@ import '../../../domain/models/client.dart';
 class ClientListItem extends StatelessWidget {
   final Client client;
 
-  const ClientListItem({required this.client});
+  const ClientListItem({super.key, required this.client});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +19,11 @@ class ClientListItem extends StatelessWidget {
         border: Border.all(
           color: isDark ? AppColors.borderDark : AppColors.border,
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: Offset(0, 4),
           ),
         ],
       ),
@@ -54,7 +54,7 @@ class ClientListItem extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.tag_rounded,
                               size: 14,
                               color: AppColors.primary,
@@ -70,7 +70,7 @@ class ClientListItem extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(width: AppSpacing.md),
-                            Icon(
+                            const Icon(
                               Icons.location_on_rounded,
                               size: 14,
                               color: AppColors.primary,
@@ -133,7 +133,7 @@ class ClientListItem extends StatelessWidget {
                 const SizedBox(height: AppSpacing.sm),
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.notes_rounded,
                       size: 14,
                       color: AppColors.primary,
@@ -157,7 +157,7 @@ class ClientListItem extends StatelessWidget {
               const SizedBox(height: AppSpacing.sm),
               Row(
                 children: [
-                  Icon(Icons.wc_rounded, size: 16, color: AppColors.primary),
+                  const Icon(Icons.wc_rounded, size: 16, color: AppColors.primary),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     client.gender,
@@ -169,7 +169,7 @@ class ClientListItem extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: AppSpacing.md),
-                  Icon(
+                  const Icon(
                     Icons.person_rounded,
                     size: 16,
                     color: AppColors.primary,
@@ -197,7 +197,7 @@ class ClientListItem extends StatelessWidget {
                       ),
                       child: Text(
                         client.category,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primary,
                           fontSize: 11,
@@ -206,7 +206,7 @@ class ClientListItem extends StatelessWidget {
                     ),
                   ],
                   const Spacer(),
-                  Icon(
+                  const Icon(
                     Icons.calendar_today_rounded,
                     size: 14,
                     color: AppColors.primary,

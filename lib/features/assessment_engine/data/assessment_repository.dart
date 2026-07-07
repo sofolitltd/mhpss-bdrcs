@@ -8,7 +8,7 @@ import '../domain/assessment_models.dart';
 part 'assessment_repository.g.dart';
 
 @riverpod
-AssessmentRepository assessmentRepository(ref) {
+AssessmentRepository assessmentRepository(Ref ref) {
   return AssessmentRepository();
 }
 

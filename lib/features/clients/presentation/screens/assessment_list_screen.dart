@@ -13,15 +13,15 @@ class AssessmentListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _isDark = Theme.of(context).brightness == Brightness.dark;
-    final bg = _isDark ? AppColors.backgroundDark : AppColors.background;
-    final textPrimary = _isDark
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final bg = isDark ? AppColors.backgroundDark : AppColors.background;
+    final textPrimary = isDark
         ? AppColors.textPrimaryDark
         : AppColors.textPrimary;
-    final textSecondary = _isDark
+    final textSecondary = isDark
         ? AppColors.textSecondaryDark
         : AppColors.textSecondary;
-    final border = _isDark ? AppColors.borderDark : AppColors.border;
+    final border = isDark ? AppColors.borderDark : AppColors.border;
 
     final routerState = GoRouterState.of(context);
     final queryParams = routerState.uri.queryParameters;
@@ -86,12 +86,12 @@ class AssessmentListScreen extends StatelessWidget {
                       return Container(
                         margin: const EdgeInsets.only(bottom: AppSpacing.md),
                         decoration: BoxDecoration(
-                          color: _isDark
+                          color: isDark
                               ? AppColors.surfaceDark
                               : AppColors.surface,
                           borderRadius: AppRadius.roundedMd,
                           border: Border.all(color: border),
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                               color: AppColors.cardShadow,
                               blurRadius: 10,
@@ -143,7 +143,7 @@ class AssessmentListScreen extends StatelessWidget {
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: AppColors.primary,
                                       foregroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
+                                      shape: const RoundedRectangleBorder(
                                         borderRadius: AppRadius.roundedSm,
                                       ),
                                     ),

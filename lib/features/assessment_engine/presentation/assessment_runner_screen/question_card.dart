@@ -90,31 +90,33 @@ class QuestionCard extends StatelessWidget {
             const SizedBox(height: 12),
             Divider(color: isDark ? AppColors.borderDark : AppColors.border),
             const SizedBox(height: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: options.map((opt) {
-                final isSel = selectedValue == opt.value;
-                return RadioListTile<int>(
-                  value: opt.value,
-                  groupValue: selectedValue,
-                  onChanged: onChanged,
-                  activeColor: AppColors.primary,
-                  dense: true,
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    opt.label,
-                    style: GoogleFonts.tiroBangla(
-                      fontSize: 14,
-                      fontWeight: isSel ? FontWeight.w600 : FontWeight.normal,
-                      color: isSel
-                          ? AppColors.primary
-                          : (isDark
-                                ? AppColors.textPrimaryDark
-                                : AppColors.textPrimary),
+            RadioGroup<int>(
+              groupValue: selectedValue,
+              onChanged: onChanged,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: options.map((opt) {
+                  final isSel = selectedValue == opt.value;
+                  return RadioListTile<int>(
+                    value: opt.value,
+                    activeColor: AppColors.primary,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    title: Text(
+                      opt.label,
+                      style: GoogleFonts.tiroBangla(
+                        fontSize: 14,
+                        fontWeight: isSel ? FontWeight.w600 : FontWeight.normal,
+                        color: isSel
+                            ? AppColors.primary
+                            : (isDark
+                                  ? AppColors.textPrimaryDark
+                                  : AppColors.textPrimary),
+                      ),
                     ),
-                  ),
-                );
-              }).toList(),
+                  );
+                }).toList(),
+              ),
             ),
           ],
         ),

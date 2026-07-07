@@ -44,8 +44,8 @@ class _ChangeAdminPasswordDialogState extends ConsumerState<ChangeAdminPasswordD
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: const Text('Password changed successfully.'),
+          const SnackBar(
+            content: Text('Password changed successfully.'),
             backgroundColor: Colors.green,
             behavior: SnackBarBehavior.floating,
           ),
@@ -140,7 +140,7 @@ class _ChangeAdminPasswordDialogState extends ConsumerState<ChangeAdminPasswordD
                         backgroundColor: AppColors.primary,
                         foregroundColor: Colors.white,
                         minimumSize: const Size(120, 48),
-                        shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
+                        shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedMd),
                       ),
                       child: _loading
                         ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))

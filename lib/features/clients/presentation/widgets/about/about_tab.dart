@@ -109,9 +109,7 @@ class _AboutTabState extends ConsumerState<AboutTab> {
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(AppSpacing.md),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InfoCard(
@@ -309,7 +307,6 @@ class _AboutTabState extends ConsumerState<AboutTab> {
             ],
           ),
         ],
-      ),
       ),
     );
   }

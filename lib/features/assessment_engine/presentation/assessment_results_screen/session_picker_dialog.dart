@@ -9,7 +9,7 @@ class SessionPickerDialog extends StatefulWidget {
   final String? currentSessionId;
   final DateTime currentDate;
 
-  const SessionPickerDialog({
+  const SessionPickerDialog({super.key, 
     required this.sessions,
     this.currentSessionId,
     required this.currentDate,
@@ -132,7 +132,7 @@ class SessionPickerDialogState extends State<SessionPickerDialog> {
                   ButtonTheme(
                     alignedDropdown: true,
                     child: DropdownButtonFormField<String?>(
-                      value: _selected,
+                      initialValue: _selected,
                       isExpanded: true,
                       dropdownColor: isDark
                           ? AppColors.surfaceDark
@@ -199,7 +199,7 @@ class SessionPickerDialogState extends State<SessionPickerDialog> {
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           minimumSize: const Size(120, 48),
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: AppRadius.roundedMd,
                           ),
                         ),

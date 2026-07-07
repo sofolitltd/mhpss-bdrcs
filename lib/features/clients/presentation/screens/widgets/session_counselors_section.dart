@@ -97,7 +97,7 @@ class SessionCounselorsSection extends StatelessWidget {
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 10,
@@ -136,7 +136,7 @@ class SessionCounselorsSection extends StatelessWidget {
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.primary,
               side: BorderSide(color: AppColors.primary.withValues(alpha: 0.4)),
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.roundedSm),
+              shape: const RoundedRectangleBorder(borderRadius: AppRadius.roundedSm),
             ),
             onPressed: onAddCounselor,
           ),

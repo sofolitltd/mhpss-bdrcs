@@ -41,7 +41,7 @@ class SessionAssessmentSection extends ConsumerWidget {
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
         border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 10,
@@ -71,7 +71,7 @@ class SessionAssessmentSection extends ConsumerWidget {
                 foregroundColor: AppColors.primary,
                 side: const BorderSide(color: AppColors.primary),
                 padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: AppRadius.roundedSm,
                 ),
               ),
@@ -107,7 +107,7 @@ class SessionAssessmentSection extends ConsumerWidget {
                             color: isDark ? AppColors.surfaceDark : AppColors.surface,
                             borderRadius: AppRadius.roundedMd,
                             border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: AppColors.cardShadow,
                                 blurRadius: 10,
@@ -153,7 +153,7 @@ class SessionAssessmentSection extends ConsumerWidget {
             ),
             error: (err, _) => Padding(
               padding: const EdgeInsets.only(top: AppSpacing.md),
-              child: Text('Error: $err', style: TextStyle(color: AppColors.accent)),
+              child: Text('Error: $err', style: const TextStyle(color: AppColors.accent)),
             ),
           ),
         ],

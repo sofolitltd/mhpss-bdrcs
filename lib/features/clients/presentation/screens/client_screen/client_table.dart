@@ -7,7 +7,7 @@ class ClientTable extends StatelessWidget {
   final List<Client> clients;
   final void Function(Client client) onDelete;
 
-  const ClientTable({required this.clients, required this.onDelete});
+  const ClientTable({super.key, required this.clients, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +95,7 @@ class ClientTable extends StatelessWidget {
                       ),
                       child: Text(
                         c.category,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primary,
                           fontSize: 12,
@@ -196,7 +196,7 @@ class ClientTable extends StatelessWidget {
 
 class HoverableNameCell extends StatefulWidget {
   final Client client;
-  const HoverableNameCell({required this.client});
+  const HoverableNameCell({super.key, required this.client});
 
   @override
   State<HoverableNameCell> createState() => HoverableNameCellState();

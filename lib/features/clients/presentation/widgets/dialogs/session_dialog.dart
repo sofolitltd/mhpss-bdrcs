@@ -280,7 +280,7 @@ class _AddSessionDialogState extends ConsumerState<AddSessionDialog> {
                     ButtonTheme(
                       alignedDropdown: true,
                       child: DropdownButtonFormField<String>(
-                        value: _status,
+                        initialValue: _status,
                         dropdownColor: isDark ? AppColors.surfaceDark : null,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
@@ -345,7 +345,7 @@ class _AddSessionDialogState extends ConsumerState<AddSessionDialog> {
                             backgroundColor: AppColors.primary,
                             foregroundColor: Colors.white,
                             minimumSize: const Size(120, 48),
-                            shape: RoundedRectangleBorder(
+                            shape: const RoundedRectangleBorder(
                               borderRadius: AppRadius.roundedMd,
                             ),
                           ),

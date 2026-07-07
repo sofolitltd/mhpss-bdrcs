@@ -31,14 +31,17 @@ class ClientDetailTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        _buildTab(context, 'About', 0),
-        _buildTab(context, 'Sessions', 1),
-        _buildTab(context, 'Assessments', 2),
-        _buildTab(context, 'Docs', 3),
-        _buildTab(context, 'Bill', 4),
-      ],
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          _buildTab(context, 'About', 0),
+          _buildTab(context, 'Sessions', 1),
+          _buildTab(context, 'Assessments', 2),
+          _buildTab(context, 'Docs', 3),
+          _buildTab(context, 'Bill', 4),
+        ],
+      ),
     );
   }
 
@@ -52,38 +55,37 @@ class ClientDetailTabBar extends StatelessWidget {
     )..layout();
     final indicatorWidth = tp.width;
 
-    return Expanded(
-      child: InkWell(
-        onTap: () => _onTabTap(context, index),
-        child: Container(
-          height: 48,
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                label,
-                style: TextStyle(
-                  color: selected
-                      ? AppColors.primary
-                      : (isDark
-                            ? AppColors.textSecondaryDark
-                            : AppColors.textSecondary),
-                  fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
-                  fontSize: 14,
-                ),
+    return InkWell(
+      onTap: () => _onTabTap(context, index),
+      child: Container(
+        height: 48,
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        alignment: Alignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              label,
+              style: TextStyle(
+                color: selected
+                    ? AppColors.primary
+                    : (isDark
+                          ? AppColors.textSecondaryDark
+                          : AppColors.textSecondary),
+                fontWeight: selected ? FontWeight.w600 : FontWeight.normal,
+                fontSize: 14,
               ),
-              const SizedBox(height: 4),
-              Container(
-                height: 2,
-                width: indicatorWidth,
-                decoration: BoxDecoration(
-                  color: selected ? AppColors.primary : Colors.transparent,
-                  borderRadius: BorderRadius.circular(1),
-                ),
+            ),
+            const SizedBox(height: 4),
+            Container(
+              height: 2,
+              width: indicatorWidth,
+              decoration: BoxDecoration(
+                color: selected ? AppColors.primary : Colors.transparent,
+                borderRadius: BorderRadius.circular(1),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

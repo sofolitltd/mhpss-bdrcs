@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../core/design_system/app_design_system.dart';
+import '../../../../core/design_system/app_design_system.dart' hide severityColor;
 import '../../domain/scoring_engine.dart';
 import 'severity_helpers.dart';
 
@@ -21,8 +21,6 @@ class AssessmentScaleCard extends StatelessWidget {
     final color = severityColor(result.severity);
     final thresholds = getSeverityThresholds(testId, result.scale);
     final maxScore = result.maxScore > 0 ? result.maxScore : 1;
-    final fontFamily = GoogleFonts.outfit().fontFamily;
-
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(bottom: AppSpacing.lg),
@@ -33,7 +31,7 @@ class AssessmentScaleCard extends StatelessWidget {
         border: Border.all(
           color: isDark ? AppColors.borderDark : AppColors.border,
         ),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
             blurRadius: 10,

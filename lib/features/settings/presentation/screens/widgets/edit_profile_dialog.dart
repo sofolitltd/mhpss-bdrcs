@@ -160,7 +160,7 @@ class _EditProfileDialogState extends ConsumerState<EditProfileDialog> {
                           backgroundColor: AppColors.primary,
                           foregroundColor: Colors.white,
                           minimumSize: const Size(140, 48),
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: AppRadius.roundedMd,
                           ),
                         ),
