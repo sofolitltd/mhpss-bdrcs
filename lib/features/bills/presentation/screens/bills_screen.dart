@@ -228,8 +228,7 @@ class BillsScreen extends ConsumerWidget {
 
                     final ids = rows.map((r) => r.session.id).toList();
 
-                    return Expanded(
-                      child: SingleChildScrollView(
+                    return SingleChildScrollView(
                         padding: pagePadding(context),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -644,8 +643,8 @@ class BillsScreen extends ConsumerWidget {
                               ),
                           ],
                         ),
-                      ),
-                    );
+                      );
+                    
                   },
                 ),
               ),
