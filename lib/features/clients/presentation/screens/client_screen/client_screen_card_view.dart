@@ -45,7 +45,8 @@ class ClientScreenCardView extends StatelessWidget {
                     }
                     if (isWide) {
                       return SliverPadding(
-                        padding: const EdgeInsets.all(AppSpacing.md),
+                               padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.md, 4, AppSpacing.md,  AppSpacing.md),
                         sliver: SliverMasonryGrid.count(
                           crossAxisCount: 2,
                           mainAxisSpacing: AppSpacing.md,
@@ -57,8 +58,8 @@ class ClientScreenCardView extends StatelessWidget {
                       );
                     }
                     return SliverPadding(
-                      padding: const EdgeInsets.all(AppSpacing.md),
-                      sliver: SliverList(
+       padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.md, 4, AppSpacing.md,  AppSpacing.md),                      sliver: SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
                           final client = sorted[index];
                           return Padding(

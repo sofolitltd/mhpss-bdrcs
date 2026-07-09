@@ -8,6 +8,7 @@ class ClientScreenTableView extends StatelessWidget {
   final AsyncValue<List<Client>> clientsAsyncValue;
   final bool isDark;
   final void Function(Client) onDelete;
+  final void Function(Client) onEdit;
   final VoidCallback onAddClient;
   final Widget Function() emptyState;
 
@@ -16,6 +17,7 @@ class ClientScreenTableView extends StatelessWidget {
     required this.clientsAsyncValue,
     required this.isDark,
     required this.onDelete,
+    required this.onEdit,
     required this.onAddClient,
     required this.emptyState,
   });
@@ -36,7 +38,8 @@ class ClientScreenTableView extends StatelessWidget {
               child: sorted.isEmpty
                   ? emptyState()
                   : Padding(
-                      padding: const EdgeInsets.all(AppSpacing.md),
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.md, 4, AppSpacing.md,  AppSpacing.md),
                       child: ScrollConfiguration(
                         behavior: MyCustomScrollBehavior(),
                         child: SingleChildScrollView(
@@ -45,6 +48,7 @@ class ClientScreenTableView extends StatelessWidget {
                           child: ClientTable(
                             clients: sorted,
                             onDelete: (Client client) => onDelete(client),
+                            onEdit: (Client client) => onEdit(client),
                           ),
                         ),
                       ),

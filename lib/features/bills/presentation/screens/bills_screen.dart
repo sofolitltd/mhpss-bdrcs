@@ -97,7 +97,7 @@ class BillsScreen extends ConsumerWidget {
             ),
           ),
           MaxWidthContainer(
-            padding: pagePadding(context).copyWith(top: 8, bottom: 8),
+            padding: pagePadding(context).copyWith(top: 16, bottom: 8),
             child: Row(
               children: [
                 IconButton(

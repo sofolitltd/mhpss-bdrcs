@@ -11,6 +11,7 @@ import 'client_screen/client_screen_card_view.dart';
 import 'client_screen/client_screen_table_view.dart';
 import 'client_screen/client_screen_empty_state.dart';
 import 'client_screen/add_client_dialog.dart';
+import 'client_detail_screen/edit_client_dialog.dart';
 
 class ClientScreen extends ConsumerStatefulWidget {
   const ClientScreen({super.key});
@@ -20,7 +21,27 @@ class ClientScreen extends ConsumerStatefulWidget {
 }
 
 class _ClientScreenState extends ConsumerState<ClientScreen> {
-  bool _isTableView = false;
+  bool _isTableView = true;
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Client> _filter(List<Client> clients) {
+    if (_searchQuery.isEmpty) return clients;
+    final q = _searchQuery.toLowerCase();
+    return clients.where((c) {
+      return c.capitalizedName.toLowerCase().contains(q) ||
+          c.address.toLowerCase().contains(q) ||
+          c.caseId.toLowerCase().contains(q) ||
+          (c.phone ?? '').toLowerCase().contains(q) ||
+          (c.alternatePhone ?? '').toLowerCase().contains(q);
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +55,9 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
         : AppColors.textSecondary;
     final bg = isDark ? AppColors.backgroundDark : AppColors.background;
     final surface = isDark ? AppColors.surfaceDark : AppColors.surface;
+    final border = isDark ? AppColors.borderDark : AppColors.border;
+
+    final filteredAsyncValue = clientsAsyncValue.whenData(_filter);
 
     return Scaffold(
       backgroundColor: bg,
@@ -81,21 +105,76 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
               ),
             ),
           ),
+          MaxWidthContainer(
+            padding: pagePadding(context),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                width: 480,
+                child: TextField(
+                  controller: _searchController,
+                  onChanged: (v) => setState(() => _searchQuery = v),
+                  decoration: InputDecoration(
+                    hintText: 'Search by name, address, case ID, or phone...',
+                    prefixIcon: const Icon(Icons.search_rounded),
+                    suffixIcon: _searchQuery.isNotEmpty
+                        ? IconButton(
+                            icon: const Icon(Icons.clear_rounded),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() => _searchQuery = '');
+                            },
+                          )
+                        : null,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: border),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(color: border),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: const BorderSide(color: AppColors.primary),
+                    ),
+                    filled: true,
+                    fillColor: isDark ? AppColors.surfaceDark : AppColors.surface,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+                    ),
           Expanded(
             child: MaxWidthContainer(
               child: _isTableView
                   ? ClientScreenTableView(
-                      clientsAsyncValue: clientsAsyncValue,
+                      clientsAsyncValue: filteredAsyncValue,
                       isDark: isDark,
                       onDelete: (Client client) => _confirmTableDelete(client),
+                      onEdit: (Client client) => EditClientDialog.show(context, client),
                       onAddClient: () => _showAddClientDialog(context),
-                      emptyState: () => ClientScreenEmptyState(isDark: isDark),
+                      emptyState: () => ClientScreenEmptyState(
+                        isDark: isDark,
+                        message: _searchQuery.isNotEmpty
+                            ? 'No clients match your search'
+                            : 'No clients registered yet',
+                      ),
                     )
                   : ClientScreenCardView(
-                      clientsAsyncValue: clientsAsyncValue,
+                      clientsAsyncValue: filteredAsyncValue,
                       isDark: isDark,
                       onAddClient: () => _showAddClientDialog(context),
-                      emptyState: () => ClientScreenEmptyState(isDark: isDark),
+                      emptyState: () => ClientScreenEmptyState(
+                        isDark: isDark,
+                        message: _searchQuery.isNotEmpty
+                            ? 'No clients match your search'
+                            : 'No clients registered yet',
+                      ),
                     ),
             ),
           ),

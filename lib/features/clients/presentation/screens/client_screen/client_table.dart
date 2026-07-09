@@ -6,8 +6,9 @@ import '../../../domain/models/client.dart';
 class ClientTable extends StatelessWidget {
   final List<Client> clients;
   final void Function(Client client) onDelete;
+  final void Function(Client client) onEdit;
 
-  const ClientTable({super.key, required this.clients, required this.onDelete});
+  const ClientTable({super.key, required this.clients, required this.onDelete, required this.onEdit});
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +19,16 @@ class ClientTable extends StatelessWidget {
     final border = isDark ? AppColors.borderDark : AppColors.border;
 
     return DataTable(
+      showCheckboxColumn: false,
       headingRowColor: WidgetStateProperty.all(
         AppColors.primary.withValues(alpha: 0.08),
       ),
       border: TableBorder.all(color: border, borderRadius: AppRadius.roundedSm),
       columnSpacing: 16,
       columns: const [
+        DataColumn(
+          label: Text('SL', style: TextStyle(fontWeight: FontWeight.bold)),
+        ),
         DataColumn(
           label: Text('Case ID', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
@@ -73,32 +78,38 @@ class ClientTable extends StatelessWidget {
           label: Text('Action', style: TextStyle(fontWeight: FontWeight.bold)),
         ),
       ],
-      rows: clients.map((c) {
+      rows: clients.asMap().entries.map((entry) {
+        final i = entry.key;
+        final c = entry.value;
         return DataRow(
+          onSelectChanged: (_) => context.go('/clients/${c.id}/about'),
           cells: [
+            DataCell(Text('${i + 1}', style: TextStyle(color: textPrimary))),
             DataCell(Text(c.caseId, style: TextStyle(color: textPrimary))),
             DataCell(HoverableNameCell(client: c)),
             DataCell(Text(c.address, style: TextStyle(color: textPrimary))),
             DataCell(Text(c.district, style: TextStyle(color: textPrimary))),
-            DataCell(Text(c.gender, style: TextStyle(color: textPrimary))),
-            DataCell(Text(c.ageRange, style: TextStyle(color: textPrimary))),
+            DataCell(Center(child: Text(c.gender, style: TextStyle(color: textPrimary)))),
+            DataCell(Center(child: Text(c.ageRange, style: TextStyle(color: textPrimary)))),
             DataCell(
               c.category.isNotEmpty
-                  ? Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 2,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        c.category,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                          fontSize: 12,
+                  ? Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: 0.15),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          c.category,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.primary,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
                     )
@@ -142,7 +153,7 @@ class ClientTable extends StatelessWidget {
                       context.go('/clients/${c.id}/about');
                       break;
                     case 'edit':
-                      context.go('/clients/${c.id}/about');
+                      onEdit(c);
                       break;
                     case 'delete':
                       onDelete(c);
@@ -214,16 +225,13 @@ class HoverableNameCellState extends State<HoverableNameCell> {
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: () => context.go('/clients/${widget.client.id}/about'),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
-          child: Text(
-            widget.client.capitalizedName,
-            style: TextStyle(
-              color: _isHovered ? AppColors.primary : textPrimary,
-              decoration: _isHovered ? TextDecoration.underline : null,
-            ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+        child: Text(
+          widget.client.capitalizedName,
+          style: TextStyle(
+            color: _isHovered ? AppColors.primary : textPrimary,
+            decoration: _isHovered ? TextDecoration.underline : null,
           ),
         ),
       ),
