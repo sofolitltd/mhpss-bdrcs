@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '/core/design_system/app_design_system.dart';
 
-class SessionDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
+class SessionDetailAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   final String fontFamily;
   final Color textPrimary;
   final Color backgroundColor;
@@ -54,6 +55,9 @@ class SessionDetailAppBar extends StatelessWidget implements PreferredSizeWidget
                 ),
               ),
             ),
+
+            
+            //
             IconButton(
               icon: Icon(Icons.receipt_rounded, color: textPrimary),
               tooltip: 'Create Bill',

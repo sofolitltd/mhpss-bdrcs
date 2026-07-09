@@ -45,6 +45,7 @@ class Auth extends _$Auth {
           phone: data?['phone'],
           designation: data?['designation'],
           employeeId: data?['employeeId'],
+          team: data?['team'],
           joinedAt: (data?['createdAt'] as dynamic)?.toDate(),
         );
       }
@@ -115,12 +116,14 @@ class Auth extends _$Auth {
     required String employeeId,
     required String designation,
     required String phone,
+    String? team,
   }) {
     state = state.copyWith(
       name: name,
       employeeId: employeeId,
       designation: designation,
       phone: phone,
+      team: team,
     );
   }
 

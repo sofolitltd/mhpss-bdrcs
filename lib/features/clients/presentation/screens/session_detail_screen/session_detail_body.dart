@@ -42,6 +42,10 @@ class SessionDetailBody extends StatelessWidget {
   final VoidCallback onRecordLocation;
   final VoidCallback onRemoveLocation;
   final VoidCallback onOpenInMaps;
+  final String team;
+  final String caseId;
+  final String clientName;
+  final String place;
 
   const SessionDetailBody({
     super.key,
@@ -76,6 +80,10 @@ class SessionDetailBody extends StatelessWidget {
     required this.onRecordLocation,
     required this.onRemoveLocation,
     required this.onOpenInMaps,
+    this.team = '',
+    this.caseId = '',
+    this.clientName = '',
+    this.place = '',
   });
 
   @override
@@ -102,6 +110,12 @@ class SessionDetailBody extends StatelessWidget {
             fontFamily: fontFamily,
             status: status,
             onStatusChanged: onStatusChanged,
+            team: team,
+            caseId: caseId,
+            clientName: clientName,
+            place: place,
+            sessionDate: date,
+            title: title,
           ),
           const SizedBox(height: AppSpacing.lg),
           SessionFollowUpSection(

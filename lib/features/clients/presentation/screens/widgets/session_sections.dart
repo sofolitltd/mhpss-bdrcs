@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '/core/design_system/app_design_system.dart';
 
@@ -7,13 +8,64 @@ class SessionStatusSection extends StatelessWidget {
   final String fontFamily;
   final String status;
   final ValueChanged<String> onStatusChanged;
+  final String team;
+  final String caseId;
+  final String clientName;
+  final String place;
+  final DateTime sessionDate;
+  final String title;
 
   const SessionStatusSection({
     super.key,
     required this.fontFamily,
     required this.status,
     required this.onStatusChanged,
+    this.team = '',
+    this.caseId = '',
+    this.clientName = '',
+    this.place = '',
+    required this.sessionDate,
+    this.title = '',
   });
+
+  String _ordinal(String s) {
+    final n = int.tryParse(s);
+    if (n == null) return s;
+    final i = n % 100;
+    if (i >= 11 && i <= 13) return '${n}th';
+    switch (n % 10) {
+      case 1:
+        return '${n}st';
+      case 2:
+        return '${n}nd';
+      case 3:
+        return '${n}rd';
+      default:
+        return '${n}th';
+    }
+  }
+
+  String _shareText() {
+    final dateStr = DateFormat('dd/MM/yyyy').format(DateTime.now());
+    final ordinalTitle = _ordinal(title);
+
+    if (status == 'completed') {
+      final doneDateStr = DateFormat('dd/MM/yyyy').format(sessionDate);
+      return 'Team: $team\n'
+          'Date: $dateStr\n'
+          'Case ID: $caseId\n'
+          "Respondent's Name: $clientName\n"
+          '$ordinalTitle session Done: $doneDateStr\n'
+          'Place: $place';
+    }
+
+    return 'Team: $team\n'
+        'Date: $dateStr\n'
+        'Case ID: $caseId\n'
+        "Respondent's Name: $clientName\n"
+        '$ordinalTitle session Will be taken: $dateStr\n'
+        'Place: $place';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +76,9 @@ class SessionStatusSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
+        border: Border.all(
+          color: isDark ? AppColors.borderDark : AppColors.border,
+        ),
         boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
@@ -36,14 +90,34 @@ class SessionStatusSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Status',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              fontFamily: fontFamily,
-              color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimary,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  'Status',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: fontFamily,
+                    color: isDark
+                        ? AppColors.textPrimaryDark
+                        : AppColors.textPrimary,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: Icon(
+                  Icons.share_rounded,
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimary,
+                ),
+                tooltip: 'Share Session',
+                onPressed: () {
+                  SharePlus.instance.share(ShareParams(text: _shareText()));
+                },
+              ),
+            ],
           ),
           const SizedBox(height: AppSpacing.sm),
           Wrap(
@@ -58,10 +132,14 @@ class SessionStatusSection extends StatelessWidget {
                 selectedColor: s == 'completed'
                     ? Colors.green
                     : s == 'cancelled'
-                        ? Colors.red
-                        : AppColors.primary,
+                    ? Colors.red
+                    : AppColors.primary,
                 labelStyle: TextStyle(
-                  color: selected ? Colors.white : (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary),
+                  color: selected
+                      ? Colors.white
+                      : (isDark
+                            ? AppColors.textPrimaryDark
+                            : AppColors.textPrimary),
                 ),
               );
             }).toList(),
@@ -95,7 +173,9 @@ class SessionFollowUpSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
+        border: Border.all(
+          color: isDark ? AppColors.borderDark : AppColors.border,
+        ),
         boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
@@ -127,7 +207,9 @@ class SessionFollowUpSection extends StatelessWidget {
                 vertical: 12,
               ),
               decoration: BoxDecoration(
-                border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
+                border: Border.all(
+                  color: isDark ? AppColors.borderDark : AppColors.border,
+                ),
                 borderRadius: AppRadius.roundedSm,
               ),
               child: Row(
@@ -135,7 +217,9 @@ class SessionFollowUpSection extends StatelessWidget {
                   Icon(
                     Icons.event_rounded,
                     size: 18,
-                    color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                    color: isDark
+                        ? AppColors.textSecondaryDark
+                        : AppColors.textSecondary,
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
@@ -144,8 +228,12 @@ class SessionFollowUpSection extends StatelessWidget {
                         : 'Set follow-up date (optional)',
                     style: TextStyle(
                       color: followUpDate != null
-                          ? (isDark ? AppColors.textPrimaryDark : AppColors.textPrimary)
-                          : (isDark ? AppColors.textSecondaryDark : AppColors.textSecondary),
+                          ? (isDark
+                                ? AppColors.textPrimaryDark
+                                : AppColors.textPrimary)
+                          : (isDark
+                                ? AppColors.textSecondaryDark
+                                : AppColors.textSecondary),
                     ),
                   ),
                   if (followUpDate != null && onClearDate != null) ...[
@@ -155,7 +243,9 @@ class SessionFollowUpSection extends StatelessWidget {
                       child: Icon(
                         Icons.close_rounded,
                         size: 18,
-                        color: isDark ? AppColors.textSecondaryDark : AppColors.textSecondary,
+                        color: isDark
+                            ? AppColors.textSecondaryDark
+                            : AppColors.textSecondary,
                       ),
                     ),
                   ],
@@ -190,7 +280,9 @@ class SessionNotesSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: isDark ? AppColors.surfaceDark : AppColors.surface,
         borderRadius: AppRadius.roundedMd,
-        border: Border.all(color: isDark ? AppColors.borderDark : AppColors.border),
+        border: Border.all(
+          color: isDark ? AppColors.borderDark : AppColors.border,
+        ),
         boxShadow: const [
           BoxShadow(
             color: AppColors.cardShadow,
@@ -219,7 +311,9 @@ class SessionNotesSection extends StatelessWidget {
               hintText: 'Enter session notes...',
               border: OutlineInputBorder(
                 borderRadius: AppRadius.roundedSm,
-                borderSide: BorderSide(color: isDark ? AppColors.borderDark : AppColors.border),
+                borderSide: BorderSide(
+                  color: isDark ? AppColors.borderDark : AppColors.border,
+                ),
               ),
               contentPadding: const EdgeInsets.all(AppSpacing.md),
             ),

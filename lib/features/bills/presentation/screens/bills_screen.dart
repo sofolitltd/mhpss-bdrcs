@@ -30,9 +30,18 @@ class BillsScreen extends ConsumerWidget {
     final selectedSessions = ref.watch(selectedBillsSessionsProvider);
     final selectionNotifier = ref.read(selectedBillsSessionsProvider.notifier);
 
-    String monthLabel = isAllTime
-        ? 'All Time'
-        : DateFormat('MMMM yyyy').format(selectedMonth);
+    String monthLabel;
+    if (isAllTime) {
+      monthLabel = 'All Time';
+    } else {
+      final m = selectedMonth.month;
+      final y = selectedMonth.year;
+      final prevM = m == 1 ? 12 : m - 1;
+      final prevY = m == 1 ? y - 1 : y;
+      final startDate = DateTime(prevY, prevM, 21);
+      final endDate = DateTime(y, m, 20);
+      monthLabel = '${DateFormat('d MMMM').format(startDate)} to ${DateFormat('d MMMM').format(endDate)}';
+    }
 
     return Scaffold(
       backgroundColor: bg,
@@ -162,7 +171,7 @@ class BillsScreen extends ConsumerWidget {
                     color: textSecondary,
                   ),
                   label: Text(
-                    isAllTime ? 'By Month' : 'All Time',
+                    isAllTime ? 'By Period' : 'All Time',
                     style: TextStyle(color: textSecondary, fontSize: 13),
                   ),
                   onPressed: () {

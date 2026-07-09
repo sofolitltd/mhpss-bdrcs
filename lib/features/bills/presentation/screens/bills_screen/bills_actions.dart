@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/services/bill_pdf_generator.dart';
-import 'bills_helpers.dart';
 import '../../../../auth/presentation/providers/auth_providers.dart';
 import '../../../../clients/domain/models/bill.dart';
 import '../../../../clients/presentation/providers/client_detail_providers.dart';
@@ -47,10 +46,15 @@ Future<void> showMonthPicker(
     firstDate: DateTime(2020),
     lastDate: DateTime(2030),
     initialEntryMode: DatePickerEntryMode.calendarOnly,
-    helpText: 'Select Month',
+    helpText: 'Select Period',
   );
   if (picked != null) {
-    ref.read(selectedBillsMonthProvider.notifier).setMonth(picked);
+    final targetMonth = picked.day >= 21
+        ? picked.month == 12
+            ? DateTime(picked.year + 1, 1, 1)
+            : DateTime(picked.year, picked.month + 1, 1)
+        : DateTime(picked.year, picked.month, 1);
+    ref.read(selectedBillsMonthProvider.notifier).setMonth(targetMonth);
     ref.read(selectedBillsSessionsProvider.notifier).deselectAll();
   }
 }
@@ -169,14 +173,12 @@ Future<void> onGeneratePdf(
     }
 
     final legList = entry.value.map((row) {
-      final clientName = row.client?.capitalizedName ?? '';
       return TaLeg(
-        from: 'Office',
-        to: clientName,
-        mode: 'CNG/Rickshaw',
+        from: '',
+        to: '',
+        mode: '',
         fare: 0,
-        remarks:
-            '${row.sessionNumber}${ordinalSuffix(row.sessionNumber)} visit',
+        remarks: '',
       );
     }).toList();
     return TaDateGroup(date: entry.key, legs: legList);

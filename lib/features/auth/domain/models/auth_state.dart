@@ -7,6 +7,7 @@ class AuthState {
   final String? designation;
   final String? employeeId;
   final String? organizationId;
+  final String? team;
   final DateTime? joinedAt;
   final bool isLoading;
   final String? error;
@@ -20,6 +21,7 @@ class AuthState {
     this.designation,
     this.employeeId,
     this.organizationId,
+    this.team,
     this.joinedAt,
     this.isLoading = false,
     this.error,
@@ -34,6 +36,7 @@ class AuthState {
     Object? designation = _unset,
     Object? employeeId = _unset,
     Object? organizationId = _unset,
+    Object? team = _unset,
     Object? joinedAt = _unset,
     bool? isLoading,
     Object? error = _unset,
@@ -47,6 +50,7 @@ class AuthState {
       designation: identical(designation, _unset) ? this.designation : designation as String?,
       employeeId: identical(employeeId, _unset) ? this.employeeId : employeeId as String?,
       organizationId: identical(organizationId, _unset) ? this.organizationId : organizationId as String?,
+      team: identical(team, _unset) ? this.team : team as String?,
       joinedAt: identical(joinedAt, _unset) ? this.joinedAt : joinedAt as DateTime?,
       isLoading: isLoading ?? this.isLoading,
       error: identical(error, _unset) ? this.error : error as String?,

@@ -140,10 +140,12 @@ Future<List<BillSessionRow>> billsSessionRows(Ref ref) async {
   DateTime? startDate;
   DateTime? endDate;
   if (!isAllTime) {
-    startDate = selectedMonth;
-    endDate = selectedMonth.month == 12
-        ? DateTime(selectedMonth.year + 1, 1, 1)
-        : DateTime(selectedMonth.year, selectedMonth.month + 1, 1);
+    final m = selectedMonth.month;
+    final y = selectedMonth.year;
+    startDate = m == 1
+        ? DateTime(y - 1, 12, 21)
+        : DateTime(y, m - 1, 21);
+    endDate = DateTime(y, m, 21);
   }
 
   final allSessions = <Session>[];
@@ -154,11 +156,13 @@ Future<List<BillSessionRow>> billsSessionRows(Ref ref) async {
 
   allSessions.sort((a, b) => a.date.compareTo(b.date));
 
-  final filtered = isAllTime
-      ? allSessions
-      : allSessions.where((s) {
-          return !s.date.isBefore(startDate!) && s.date.isBefore(endDate!);
-        }).toList();
+  final filtered = (isAllTime
+          ? allSessions
+          : allSessions.where((s) {
+              return !s.date.isBefore(startDate!) && s.date.isBefore(endDate!);
+            }))
+      .where((s) => s.status == 'completed')
+      .toList();
 
   final allSortedByClient = <String, List<Session>>{};
   for (final s in allSessions) {

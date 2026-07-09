@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '/core/design_system/app_design_system.dart';
 import '/core/logger/app_logger.dart';
+import '/features/auth/presentation/providers/auth_providers.dart';
 import '../../domain/session.dart';
 import '../providers/client_detail_providers.dart';
 import '../widgets/bill_tab.dart';
@@ -279,6 +280,13 @@ class _SessionDetailScreenState extends ConsumerState<SessionDetailScreen> {
     final assessmentsAsync = ref.watch(
       linkedAssessmentSessionsProvider(widget.session.id),
     );
+    final authState = ref.watch(authProvider);
+    final client = ref.watch(clientByIdProvider(widget.session.clientId));
+    final team = authState.team ?? '';
+    final caseId = client?.caseId ?? '';
+    final clientName = client?.capitalizedName ?? '';
+    final place = client != null ? '${client.address}, ${client.district}' : '';
+
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final bg = isDark ? AppColors.backgroundDark : AppColors.background;
     final textPrimary = isDark
@@ -339,6 +347,10 @@ class _SessionDetailScreenState extends ConsumerState<SessionDetailScreen> {
           Uri.parse('https://www.google.com/maps?q=$_latitude,$_longitude'),
           mode: LaunchMode.externalApplication,
         ),
+        team: team,
+        caseId: caseId,
+        clientName: clientName,
+        place: place,
       ),
     );
   }

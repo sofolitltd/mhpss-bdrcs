@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '/core/design_system/app_design_system.dart';
 import '../../../../clients/domain/session.dart';
+import '../../../../clients/presentation/providers/client_detail_providers.dart';
 
 enum ScheduleRange { today, week, month }
 
@@ -33,36 +35,58 @@ class TodaySchedule extends StatelessWidget {
 
   String get _title {
     switch (range) {
-      case ScheduleRange.today: return "Today's Schedule";
-      case ScheduleRange.week: return "This Week's Schedule";
-      case ScheduleRange.month: return "This Month's Schedule";
+      case ScheduleRange.today:
+        return "Today's Schedule";
+      case ScheduleRange.week:
+        return "This Week's Schedule";
+      case ScheduleRange.month:
+        return "This Month's Schedule";
     }
   }
 
   String get _emptyText {
     switch (range) {
-      case ScheduleRange.today: return 'No sessions scheduled for today';
-      case ScheduleRange.week: return 'No sessions scheduled this week';
-      case ScheduleRange.month: return 'No sessions scheduled this month';
+      case ScheduleRange.today:
+        return 'No sessions scheduled for today';
+      case ScheduleRange.week:
+        return 'No sessions scheduled this week';
+      case ScheduleRange.month:
+        return 'No sessions scheduled this month';
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(AppSpacing.md, 0, AppSpacing.md, AppSpacing.sm),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.md,
+        0,
+        AppSpacing.md,
+        AppSpacing.sm,
+      ),
       child: Container(
         decoration: BoxDecoration(
           color: surface,
           borderRadius: AppRadius.roundedMd,
           border: Border.all(color: border),
-          boxShadow: const [BoxShadow(color: AppColors.cardShadow, blurRadius: 10, offset: Offset(0, 4))],
+          boxShadow: const [
+            BoxShadow(
+              color: AppColors.cardShadow,
+              blurRadius: 10,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.sm, AppSpacing.sm),
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.md,
+                AppSpacing.md,
+                AppSpacing.sm,
+                AppSpacing.sm,
+              ),
               child: Row(
                 children: [
                   Text(
@@ -87,7 +111,11 @@ class TodaySchedule extends StatelessWidget {
                       child: DropdownButton<ScheduleRange>(
                         value: range,
                         underline: const SizedBox(),
-                        icon: Icon(Icons.arrow_drop_down_rounded, color: textSecondary, size: 20),
+                        icon: Icon(
+                          Icons.arrow_drop_down_rounded,
+                          color: textSecondary,
+                          size: 20,
+                        ),
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
@@ -95,9 +123,18 @@ class TodaySchedule extends StatelessWidget {
                           fontFamily: fontFamily,
                         ),
                         items: const [
-                          DropdownMenuItem(value: ScheduleRange.today, child: Text('Today')),
-                          DropdownMenuItem(value: ScheduleRange.week, child: Text('This Week')),
-                          DropdownMenuItem(value: ScheduleRange.month, child: Text('This Month')),
+                          DropdownMenuItem(
+                            value: ScheduleRange.today,
+                            child: Text('Today'),
+                          ),
+                          DropdownMenuItem(
+                            value: ScheduleRange.week,
+                            child: Text('This Week'),
+                          ),
+                          DropdownMenuItem(
+                            value: ScheduleRange.month,
+                            child: Text('This Month'),
+                          ),
                         ],
                         onChanged: (v) {
                           if (v != null) onRangeChanged(v);
@@ -108,17 +145,30 @@ class TodaySchedule extends StatelessWidget {
                 ],
               ),
             ),
-            Divider(height: 1, color: border, indent: AppSpacing.md, endIndent: AppSpacing.md),
+            Divider(
+              height: 1,
+              color: border,
+              indent: AppSpacing.md,
+              endIndent: AppSpacing.md,
+            ),
             if (sessions.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Row(
                   children: [
-                    Icon(Icons.event_busy_rounded, size: 18, color: textSecondary),
+                    Icon(
+                      Icons.event_busy_rounded,
+                      size: 18,
+                      color: textSecondary,
+                    ),
                     const SizedBox(width: AppSpacing.sm),
                     Text(
                       _emptyText,
-                      style: TextStyle(color: textSecondary, fontSize: 14, fontFamily: fontFamily),
+                      style: TextStyle(
+                        color: textSecondary,
+                        fontSize: 14,
+                        fontFamily: fontFamily,
+                      ),
                     ),
                   ],
                 ),
@@ -128,14 +178,18 @@ class TodaySchedule extends StatelessWidget {
                 padding: const EdgeInsets.all(AppSpacing.md),
                 child: Column(
                   spacing: AppSpacing.md,
-                  children: sessions.map((s) => _SessionTile(
-                    session: s,
-                    isDark: isDark,
-                    textPrimary: textPrimary,
-                    textSecondary: textSecondary,
-                    border: border,
-                    fontFamily: fontFamily,
-                  )).toList(),
+                  children: sessions
+                      .map(
+                        (s) => _SessionTile(
+                          session: s,
+                          isDark: isDark,
+                          textPrimary: textPrimary,
+                          textSecondary: textSecondary,
+                          border: border,
+                          fontFamily: fontFamily,
+                        ),
+                      )
+                      .toList(),
                 ),
               ),
           ],
@@ -145,7 +199,7 @@ class TodaySchedule extends StatelessWidget {
   }
 }
 
-class _SessionTile extends StatelessWidget {
+class _SessionTile extends ConsumerWidget {
   final Session session;
   final bool isDark;
   final Color textPrimary;
@@ -164,9 +218,12 @@ class _SessionTile extends StatelessWidget {
 
   Color _statusColor() {
     switch (session.status) {
-      case 'completed': return Colors.green;
-      case 'cancelled': return Colors.red;
-      default: return AppColors.primary;
+      case 'completed':
+        return Colors.green;
+      case 'cancelled':
+        return Colors.red;
+      default:
+        return AppColors.primary;
     }
   }
 
@@ -185,13 +242,17 @@ class _SessionTile extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final client = ref.watch(clientByIdProvider(session.clientId));
     final dateText = DateFormat.yMMMd().format(session.date);
     final statusColor = _statusColor();
     final timeText = _timeText();
 
     return InkWell(
-      onTap: () => context.go('/clients/${session.clientId}/sessions/${session.id}', extra: {'session': session}),
+      onTap: () => context.go(
+        '/clients/${session.clientId}/sessions/${session.id}',
+        extra: {'session': session},
+      ),
       borderRadius: AppRadius.roundedMd,
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
@@ -216,20 +277,21 @@ class _SessionTile extends StatelessWidget {
                 Expanded(
                   child: Text(
                     dateText,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: textSecondary,
-                    ),
+                    style: TextStyle(fontSize: 12, color: textSecondary),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: Text(
-                    session.status[0].toUpperCase() + session.status.substring(1),
+                    session.status[0].toUpperCase() +
+                        session.status.substring(1),
                     style: TextStyle(
                       fontSize: 10,
                       fontWeight: FontWeight.w600,
@@ -239,9 +301,15 @@ class _SessionTile extends StatelessWidget {
                 ),
               ],
             ),
+
             const SizedBox(height: 4),
+
             Text(
-              session.clientAlias.isNotEmpty ? session.clientAlias : 'Client',
+              client != null
+                  ? '${client.caseId} - ${client.capitalizedName}'
+                  : session.clientAlias.isNotEmpty
+                  ? session.clientAlias
+                  : 'Client',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 15,
@@ -249,44 +317,40 @@ class _SessionTile extends StatelessWidget {
                 fontFamily: fontFamily,
               ),
             ),
-            Row(
-              mainAxisAlignment:.start,
-              children: [
-                if (session.title.isNotEmpty) ...[
-              const SizedBox(height: 4),
-              Text(
-                session.title,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: textSecondary,
-                  fontFamily: fontFamily,
-                ),
-              ),
-            ],
-            if (timeText != null) ...[
-              const SizedBox(width: AppSpacing.sm),
 
-              Text(
-                ' | ',
-                style: TextStyle(fontSize: 10, color: textSecondary),
+            const SizedBox(height: 4),
+
+            if (session.title.isNotEmpty || timeText != null)
+              Row(
+                children: [
+                  if (session.title.isNotEmpty)
+                    Text(
+                      session.title,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: textSecondary,
+                        fontFamily: fontFamily,
+                      ),
+                    ),
+                  if (session.title.isNotEmpty && timeText != null)
+                    Text(
+                      ' | ',
+                      style: TextStyle(fontSize: 10, color: textSecondary),
+                    ),
+                  if (timeText != null)
+                    Flexible(
+                      child: Text(
+                        timeText,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: textSecondary,
+                          fontFamily: fontFamily,
+                        ),
+                      ),
+                    ),
+                ],
               ),
-              const SizedBox(width: AppSpacing.sm),
-              Padding(
-                padding: const EdgeInsets.only(right: AppSpacing.sm),
-                child: Text(
-                  timeText,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: textSecondary,
-                    fontFamily: fontFamily,
-                  ),
-                ),
-              ),
-            ],
-              ],
-            ),
           ],
         ),
       ),

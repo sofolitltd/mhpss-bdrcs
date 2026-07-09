@@ -47,6 +47,8 @@ class BillPdfPageBuilder {
     required List<pw.TableRow> taRows,
     required List<pw.TableRow> daRows,
     required bool includeMobile,
+    int pageNumber = 0,
+    int totalPages = 0,
   }) {
     return pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
@@ -81,19 +83,19 @@ class BillPdfPageBuilder {
                       bottom: pw.BorderSide(width: 0.5),
                     ),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                 ),
                 pw.Container(
                   decoration: const pw.BoxDecoration(
                     border: pw.Border(bottom: pw.BorderSide(width: 0.5)),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                 ),
                 pw.Container(
                   decoration: const pw.BoxDecoration(
                     border: pw.Border(bottom: pw.BorderSide(width: 0.5)),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                 ),
                 pw.Container(
                   decoration: const pw.BoxDecoration(
@@ -103,7 +105,7 @@ class BillPdfPageBuilder {
                       bottom: pw.BorderSide(width: 0.5),
                     ),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                   padding: const pw.EdgeInsets.symmetric(
                     horizontal: 4,
                     vertical: 2,
@@ -118,7 +120,7 @@ class BillPdfPageBuilder {
                       bottom: pw.BorderSide(width: 0.5),
                     ),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                   padding: const pw.EdgeInsets.symmetric(
                     horizontal: 4,
                     vertical: 2,
@@ -133,7 +135,7 @@ class BillPdfPageBuilder {
                       bottom: pw.BorderSide(width: 0.5),
                     ),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                 ),
               ],
             ),
@@ -154,14 +156,14 @@ class BillPdfPageBuilder {
               children: [
                 pw.Container(
                   padding: const pw.EdgeInsets.only(top: 4, left: 4),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                   child: pw.Text('Basic Pay TK.', style: bodyStyle),
                 ),
                 pw.Container(
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                 ),
                 pw.Container(
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                 ),
                 pw.Container(
                   decoration: const pw.BoxDecoration(
@@ -171,7 +173,7 @@ class BillPdfPageBuilder {
                       bottom: pw.BorderSide(width: 0.5),
                     ),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                   padding: const pw.EdgeInsets.symmetric(
                     horizontal: 4,
                     vertical: 2,
@@ -186,7 +188,7 @@ class BillPdfPageBuilder {
                       bottom: pw.BorderSide(width: 0.5),
                     ),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                   padding: const pw.EdgeInsets.symmetric(
                     horizontal: 4,
                     vertical: 2,
@@ -201,13 +203,13 @@ class BillPdfPageBuilder {
                       bottom: pw.BorderSide(width: 0.5),
                     ),
                   ),
-                  constraints: const pw.BoxConstraints(minHeight: 18),
+                  constraints: const pw.BoxConstraints(minHeight: 20),
                 ),
               ],
             ),
           ],
         ),
-        pw.SizedBox(height: 24),
+        pw.Spacer(),
         footerRow(
           includeMobile
               ? 'Grand Total: (T/A + D/A + Mobile) ($taSubTotal + $daDateTotal + $mobileDateTotal = $dateTotal)'
@@ -216,27 +218,36 @@ class BillPdfPageBuilder {
           'Applicant Signature',
           boldStyle,
         ),
-        pw.SizedBox(height: 24),
+        pw.SizedBox(height: 16),
         footerRow(
           'Certified for Payment of TK.= ${dateTotal.toInt()}',
           '',
           'Finance Officer',
           boldStyle,
         ),
-        pw.SizedBox(height: 24),
+        pw.SizedBox(height: 16),
         footerRow(
           'Passed for Payment of TK.= ${dateTotal.toInt()}',
           '',
           'Project Manager',
           boldStyle,
         ),
-        pw.SizedBox(height: 24),
+        pw.SizedBox(height: 16),
         footerRow(
           'Received Tk.= ${dateTotal.toInt()}',
           '',
           'Recipient',
           boldStyle,
         ),
+        if (pageNumber > 0 && totalPages > 0) ...[
+          pw.SizedBox(height: 4),
+          pw.Center(
+            child: pw.Text(
+              'Page $pageNumber of $totalPages',
+              style: bodyStyle,
+            ),
+          ),
+        ],
       ],
     );
   }

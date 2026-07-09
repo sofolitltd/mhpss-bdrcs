@@ -73,6 +73,8 @@ class _AdminSessionDetailScreenState extends ConsumerState<AdminSessionDetailScr
               fontFamily: fontFamily,
               status: widget.session.status,
               onStatusChanged: (_) {},
+              sessionDate: widget.session.date,
+              title: widget.session.title,
             ),
             if (widget.session.followUpDate != null) ...[
               const SizedBox(height: AppSpacing.lg),

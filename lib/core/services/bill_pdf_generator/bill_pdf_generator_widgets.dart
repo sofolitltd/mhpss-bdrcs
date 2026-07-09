@@ -1,13 +1,17 @@
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
-pw.Widget buildHeader(pw.Font ttfBold, pw.Font ttf) {
+pw.Widget buildHeader(pw.Font ttfBold, pw.Font ttf, {bool showSubtitle = true, pw.Widget? logo, double bottomSpacing = 16}) {
   return pw.Container(
     width: double.infinity,
     alignment: pw.Alignment.center,
     child: pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.center,
       children: [
+        if (logo != null) ...[
+          logo,
+          pw.SizedBox(height: 8),
+        ],
         pw.Text(
           'BANGLADESH RED CRESCENT SOCIETY',
           style: pw.TextStyle(font: ttfBold, fontSize: 14),
@@ -20,16 +24,17 @@ pw.Widget buildHeader(pw.Font ttfBold, pw.Font ttf) {
           '684-686, Red Crescent Sarak, Bara Moghbazar, Dhaka-1217',
           style: pw.TextStyle(font: ttfBold, fontSize: 10),
         ),
-        pw.SizedBox(height: 8),
-        pw.Text(
-          'Traveling & Daily Allowance',
-          style: pw.TextStyle(
-            font: ttfBold,
-            fontSize: 12,
-            decoration: pw.TextDecoration.underline,
+        if (showSubtitle) ...[
+          pw.Text(
+            'Traveling & Daily Allowance',
+            style: pw.TextStyle(
+              font: ttfBold,
+              fontSize: 12,
+              decoration: pw.TextDecoration.underline,
+            ),
           ),
-        ),
-        pw.SizedBox(height: 16),
+        ],
+        pw.SizedBox(height: bottomSpacing),
       ],
     ),
   );
@@ -56,7 +61,7 @@ pw.Widget cell(
   required pw.TextStyle bodyStyle,
 }) {
   return pw.Container(
-    constraints: const pw.BoxConstraints(minHeight: 18),
+    constraints: const pw.BoxConstraints(minHeight: 20),
     padding: const pw.EdgeInsets.symmetric(horizontal: 4, vertical: 2),
     alignment: isHeader ? pw.Alignment.center : alignment,
     child: pw.Text(text, style: isHeader ? boldStyle : bodyStyle),
