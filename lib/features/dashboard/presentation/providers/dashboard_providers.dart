@@ -48,7 +48,7 @@ Future<DashboardData> dashboardData(Ref ref) async {
 
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
-    final weekStart = todayStart.subtract(Duration(days: todayStart.weekday - 1));
+    final weekStart = todayStart.subtract(Duration(days: todayStart.weekday % 7));
 
     final List<Session> todaySessions = sessions.where((Session s) {
       return s.date.isAfter(todayStart.subtract(const Duration(hours: 1))) &&

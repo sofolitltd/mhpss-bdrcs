@@ -54,7 +54,7 @@ class DailyAllowanceSection extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      '300 tk per day',
+                      '300 TK per month',
                       style: TextStyle(
                         color: isDark
                             ? AppColors.textSecondaryDark

@@ -65,7 +65,7 @@ class AdminDashboardData extends _$AdminDashboardData {
 
     final now = DateTime.now();
     final todayStart = DateTime(now.year, now.month, now.day);
-    final weekStart = todayStart.subtract(Duration(days: todayStart.weekday - 1));
+    final weekStart = todayStart.subtract(Duration(days: todayStart.weekday % 7));
     final monthStart = DateTime(now.year, now.month, 1);
 
     final weekSessions = sessions.where((s) => s.date.isAfter(weekStart)).length;

@@ -33,7 +33,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         start = todayStart;
         end = todayStart.add(const Duration(days: 1));
       case ScheduleRange.week:
-        start = todayStart.subtract(Duration(days: todayStart.weekday - 1));
+        start = todayStart.subtract(Duration(days: todayStart.weekday % 7));
         end = start.add(const Duration(days: 7));
       case ScheduleRange.month:
         start = DateTime(now.year, now.month, 1);

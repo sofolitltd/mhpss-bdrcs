@@ -6,6 +6,7 @@ class SectionCard extends StatelessWidget {
   final Color sectionColor;
   final Color textColor;
   final Widget child;
+  final Widget? titleTrailing;
 
   const SectionCard({
     super.key,
@@ -13,6 +14,7 @@ class SectionCard extends StatelessWidget {
     required this.sectionColor,
     required this.textColor,
     required this.child,
+    this.titleTrailing,
   });
 
   @override
@@ -24,13 +26,19 @@ class SectionCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: textColor,
-              ),
+            Row(
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                  ),
+                ),
+                if (titleTrailing != null) const Spacer(),
+                ?titleTrailing,
+              ],
             ),
             const SizedBox(height: AppSpacing.sm),
             child,

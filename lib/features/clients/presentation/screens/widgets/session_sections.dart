@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -107,14 +108,38 @@ class SessionStatusSection extends StatelessWidget {
               ),
               IconButton(
                 icon: Icon(
+                  Icons.copy_rounded,
+                  color: isDark
+                      ? AppColors.textPrimaryDark
+                      : AppColors.textPrimary,
+                ),
+                tooltip: 'Copy to Clipboard',
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: _shareText()));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Copied to clipboard')),
+                  );
+                },
+              ),
+              IconButton(
+                icon: Icon(
                   Icons.share_rounded,
                   color: isDark
                       ? AppColors.textPrimaryDark
                       : AppColors.textPrimary,
                 ),
                 tooltip: 'Share Session',
-                onPressed: () {
-                  SharePlus.instance.share(ShareParams(text: _shareText()));
+                onPressed: () async {
+                  try {
+                    await SharePlus.instance
+                        .share(ShareParams(text: _shareText()));
+                  } catch (e) {
+                    if (context.mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Share failed: $e')),
+                      );
+                    }
+                  }
                 },
               ),
             ],

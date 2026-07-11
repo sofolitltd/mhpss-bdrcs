@@ -9,6 +9,7 @@ class TaDateGroupCard extends StatelessWidget {
   final TaGroupData group;
   final Color textColor;
   final VoidCallback onChanged;
+  final bool isTableView;
 
   const TaDateGroupCard({
     super.key,
@@ -16,6 +17,7 @@ class TaDateGroupCard extends StatelessWidget {
     required this.group,
     required this.textColor,
     required this.onChanged,
+    this.isTableView = true,
   });
 
   @override
@@ -48,208 +50,9 @@ class TaDateGroupCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           if (group.legs.isNotEmpty)
-            LayoutBuilder(
-              builder: (context, constraints) {
-                final tableWidth = constraints.maxWidth;
-                final actualWidth = tableWidth < 840 ? 840.0 : tableWidth;
-                final flexSpace = actualWidth - 66;
-                double colFrom, colTo, colMode, colFare, colRemarks, colActions;
-                colFrom = flexSpace * 13 / 80;
-                colTo = flexSpace * 13 / 80;
-                colMode = flexSpace * 11 / 80;
-                colFare = flexSpace * 11 / 80;
-                colRemarks = flexSpace * 20 / 80;
-                colActions =
-                    flexSpace -
-                    colFrom -
-                    colTo -
-                    colMode -
-                    colFare -
-                    colRemarks;
-                return ScrollConfiguration(
-                  behavior: MyCustomScrollBehavior(),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: SizedBox(
-                      width: actualWidth,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(color: borderColor),
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            clipBehavior: Clip.antiAlias,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 12,
-                                  ),
-                                  color: AppColors.primary.withValues(
-                                    alpha: 0.08,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 32,
-                                        child: Text(
-                                          '',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      SizedBox(
-                                        width: colFrom,
-                                        child: Text(
-                                          'From',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: colTo,
-                                        child: Text(
-                                          'To',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: colMode,
-                                        child: Text(
-                                          'Mode',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: colFare,
-                                        child: Text(
-                                          'Fare',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: colRemarks,
-                                        child: Text(
-                                          'Remarks',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: colActions,
-                                        child: Text(
-                                          '',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                for (
-                                  int lIdx = 0;
-                                  lIdx < group.legs.length;
-                                  lIdx++
-                                )
-                                  _buildLegRow(
-                                    context,
-                                    group.legs[lIdx],
-                                    lIdx,
-                                    textColor,
-                                    borderColor,
-                                    colFrom: colFrom,
-                                    colTo: colTo,
-                                    colMode: colMode,
-                                    colFare: colFare,
-                                    colRemarks: colRemarks,
-                                    colActions: colActions,
-                                  ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 10,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primary.withValues(
-                                      alpha: 0.1,
-                                    ),
-                                    border: Border(
-                                      bottom: BorderSide(color: borderColor),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      const SizedBox(width: 32),
-                                      const SizedBox(width: 8),
-                                      SizedBox(width: colFrom),
-                                      SizedBox(width: colTo),
-                                      SizedBox(width: colMode),
-                                      SizedBox(
-                                        width: colFare,
-                                        child: Text(
-                                          '${group.subTotal}',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                            fontSize: 13,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: colRemarks,
-                                        child: Text(
-                                          'Subtotal',
-                                          textAlign: TextAlign.end,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: textColor,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: colActions),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
+            isTableView
+                ? _buildTableView(context, borderColor, textColor)
+                : _buildCardView(context, borderColor, textColor)
           else
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 24),
@@ -263,7 +66,370 @@ class TaDateGroupCard extends StatelessWidget {
                 ),
               ),
             ),
+
         ],
+      ),
+    );
+  }
+
+  Widget _buildTableView(BuildContext context, Color borderColor, Color textColor) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final tableWidth = constraints.maxWidth;
+        final actualWidth = tableWidth < 840 ? 840.0 : tableWidth;
+        final flexSpace = actualWidth - 66;
+        double colFrom, colTo, colMode, colFare, colRemarks, colActions;
+        colFrom = flexSpace * 13 / 80;
+        colTo = flexSpace * 13 / 80;
+        colMode = flexSpace * 11 / 80;
+        colFare = flexSpace * 11 / 80;
+        colRemarks = flexSpace * 20 / 80;
+        colActions =
+            flexSpace -
+            colFrom -
+            colTo -
+            colMode -
+            colFare -
+            colRemarks;
+        return ScrollConfiguration(
+          behavior: MyCustomScrollBehavior(),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: SizedBox(
+              width: actualWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      maxHeight: 300,
+                    ),
+                    child: SingleChildScrollView(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: borderColor),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 12,
+                              ),
+                              color: AppColors.primary.withValues(
+                                alpha: 0.08,
+                              ),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 32,
+                                    child: Text(
+                                      '',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  SizedBox(
+                                    width: colFrom,
+                                    child: Text(
+                                      'From',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: colTo,
+                                    child: Text(
+                                      'To',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: colMode,
+                                    child: Text(
+                                      'Mode',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: colFare,
+                                    child: Text(
+                                      'Fare',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: colRemarks,
+                                    child: Text(
+                                      'Remarks',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: colActions,
+                                    child: Text(
+                                      '',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            for (int lIdx = 0; lIdx < group.legs.length; lIdx++)
+                              _buildLegRow(
+                                context,
+                                group.legs[lIdx],
+                                lIdx,
+                                textColor,
+                                borderColor,
+                                colFrom: colFrom,
+                                colTo: colTo,
+                                colMode: colMode,
+                                colFare: colFare,
+                                colRemarks: colRemarks,
+                                colActions: colActions,
+                              ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withValues(
+                                  alpha: 0.1,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 32),
+                                  const SizedBox(width: 8),
+                                  SizedBox(width: colFrom),
+                                  SizedBox(width: colTo),
+                                  SizedBox(width: colMode),
+                                  SizedBox(
+                                    width: colFare,
+                                    child: Text(
+                                      '${group.subTotal}',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: colRemarks,
+                                    child: Text(
+                                      'Subtotal',
+                                      textAlign: TextAlign.end,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: textColor,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: colActions),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildCardView(BuildContext context, Color borderColor, Color textColor) {
+    final cardColor = AppColors.primary.withValues(alpha: 0.04);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (int i = 0; i < group.legs.length; i++)
+          Container(
+            key: ObjectKey(group.legs[i]),
+            margin: const EdgeInsets.only(bottom: 6),
+            decoration: BoxDecoration(
+              border: Border.all(color: borderColor),
+              borderRadius: BorderRadius.circular(8),
+              color: i.isOdd ? cardColor : null,
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${group.legs[i].from}  →  ${group.legs[i].to}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: textColor,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  children: [
+                    Text(
+                      'Mode: ${group.legs[i].mode}',
+                      style: TextStyle(fontSize: 12, color: textColor.withValues(alpha: 0.7)),
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      'Fare: ${group.legs[i].fare}',
+                      style: TextStyle(fontSize: 12, color: textColor.withValues(alpha: 0.7)),
+                    ),
+                  ],
+                ),
+                if (group.legs[i].remarks.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      'Remarks: ${group.legs[i].remarks}',
+                      style: TextStyle(fontSize: 12, color: textColor.withValues(alpha: 0.5)),
+                    ),
+                  ),
+                const SizedBox(height: 8),
+                Wrap(
+                    spacing: 6,
+                    runSpacing: 4,
+                    children: [
+                      _borderedAction(
+                        icon: Icons.keyboard_arrow_up,
+                        borderColor: borderColor,
+                        onPressed: i > 0
+                            ? () {
+                                final item = group.legs.removeAt(i);
+                                group.legs.insert(i - 1, item);
+                                onChanged();
+                              }
+                            : null,
+                      ),
+                      _borderedAction(
+                        icon: Icons.keyboard_arrow_down,
+                        borderColor: borderColor,
+                        onPressed: i < group.legs.length - 1
+                            ? () {
+                                final item = group.legs.removeAt(i);
+                                group.legs.insert(i + 1, item);
+                                onChanged();
+                              }
+                            : null,
+                      ),
+                      _borderedAction(
+                        icon: Icons.content_copy,
+                        borderColor: borderColor,
+                        tooltip: 'Duplicate',
+                        onPressed: () => _showLegDialog(context, leg: group.legs[i]),
+                      ),
+                      _borderedAction(
+                        icon: Icons.edit_outlined,
+                        borderColor: borderColor,
+                        tooltip: 'Edit',
+                        onPressed: () =>
+                            _showLegDialog(context, leg: group.legs[i], index: i),
+                      ),
+                      _borderedAction(
+                        icon: Icons.close,
+                        borderColor: borderColor,
+                        tooltip: 'Remove',
+                        onPressed: () {
+                          group.legs.removeAt(i);
+                          onChanged();
+                        },
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            color: AppColors.primary.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: borderColor),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Subtotal',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                  fontSize: 13,
+                ),
+              ),
+              Text(
+                '${group.subTotal}',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: textColor,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _borderedAction({
+    required IconData icon,
+    required Color borderColor,
+    double size = 14,
+    String? tooltip,
+    VoidCallback? onPressed,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: borderColor, width: 0.5),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: IconButton(
+        icon: Icon(icon, size: size),
+        tooltip: tooltip,
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
       ),
     );
   }
